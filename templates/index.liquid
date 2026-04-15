@@ -1,0 +1,21 @@
+{% comment %}
+  Paws & Co. Homepage — Git-controlled layout
+  ───────────────────────────────────────────
+  Using a .liquid template (not .json) so GitHub pushes actually overwrite this file.
+  Shopify treats templates/*.json as merchant-owned; templates/*.liquid as code.
+
+  Each {% section %} tag renders a section with its schema-defined settings + blocks.
+  Merchants CAN still customize each section's content via the theme editor — they
+  just can't add/remove/reorder sections on the homepage from the editor.
+  The layout order is controlled from this file in Git.
+{% endcomment %}
+
+{% section 'paws-hero' %}
+{% section 'paws-features' %}
+{% section 'paws-categories' %}
+{% section 'paws-bestsellers' %}
+{% section 'paws-promo' %}
+{% section 'paws-stats' %}
+{% section 'paws-testimonials' %}
+{% section 'paws-journal' %}
+{% section 'paws-newsletter' %}
