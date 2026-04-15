@@ -1,4 +1,24 @@
-{% comment %} Paws & Co. Sticky Header — logo + nav + actions {% endcomment %}
+{% comment %} Paws & Co. Sticky Header — logo + nav + actions + real cart drawer {% endcomment %}
+
+{%- capture empty_cart_drawer_content -%}
+  <div class="cart-drawer__header">
+    <h2 class="cart-drawer__heading h4" id="cart-drawer-heading-empty">
+      {{ 'content.cart_title' | t }}
+    </h2>
+    <button ref="closeButton" on:click="cart-drawer-component/close" class="button close-button cart-drawer__close-button button-unstyled" aria-label="{{ 'actions.close_dialog' | t }}">
+      <span class="svg-wrapper">{{- 'icon-close.svg' | inline_asset_content -}}</span>
+    </button>
+  </div>
+  <div class="cart-drawer__content">
+    <div class="cart-drawer__empty">
+      <p class="cart-drawer__heading h5">{{ 'content.cart_empty' | t }}</p>
+      <a href="{{ settings.empty_cart_button_link | default: routes.all_products_collection_url }}" class="button cart-items__empty-button paws-btn paws-btn--coral">
+        <span class="button-text">{{ 'actions.continue_shopping' | t }}</span>
+      </a>
+    </div>
+  </div>
+{%- endcapture -%}
+
 <header class="paws-header">
   <div class="paws-header-inner">
     <a href="{{ routes.root_url }}" class="paws-logo">
@@ -23,17 +43,91 @@
     </nav>
 
     <div class="paws-header-actions">
-      <button class="paws-icon-btn" aria-label="Search" data-paws-search-open type="button">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" width="20" height="20"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <button class="paws-icon-btn paws-mobile-menu-toggle" aria-label="Open menu" type="button" data-paws-mobile-menu-open>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" width="20" height="20"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
       </button>
+
+      <a href="{{ routes.search_url }}" class="paws-icon-btn" aria-label="Search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" width="20" height="20"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      </a>
+
       <a href="{{ routes.account_url }}" class="paws-icon-btn" aria-label="Account">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
       </a>
-      <button class="paws-icon-btn" aria-label="Cart" data-paws-cart-open type="button">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-        <span class="paws-cart-count">{{ cart.item_count }}</span>
-      </button>
+
+      {%- if settings.cart_type == 'drawer' -%}
+        {% comment %} Horizon's native cart drawer component — handles open/close, ajax, animations {% endcomment %}
+        <cart-drawer-component class="cart-drawer paws-cart-wrap">
+          <template id="empty-cart-template">{{ empty_cart_drawer_content }}</template>
+
+          <button class="paws-icon-btn" on:click="/open" aria-label="{{ 'accessibility.cart' | t }}" aria-haspopup="dialog" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            <span class="paws-cart-count"{% if cart.item_count == 0 %} style="display:none"{% endif %} data-cart-count>{{ cart.item_count }}</span>
+          </button>
+
+          <dialog
+            ref="dialog"
+            class="cart-drawer__dialog dialog-modal dialog-drawer color-{{ settings.drawer_color_scheme | default: 'scheme-1' }}{% if cart.empty? %} cart-drawer--empty{% endif %}"
+            aria-labelledby="{% if cart.empty? %}cart-drawer-heading-empty{% else %}cart-drawer-heading{% endif %}"
+            scroll-lock
+            cart-summary-sticky="true"
+          >
+            <span ref="liveRegion" class="visually-hidden" role="status"></span>
+            <div class="cart-drawer__inner" data-hydration-key="cart-drawer-inner">
+              {% capture cart_items_children %}
+                {%- if cart.empty? -%}
+                  {{ empty_cart_drawer_content }}
+                {%- else -%}
+                  <div class="cart-drawer__header" id="cart-drawer-header">
+                    <h2 class="cart-drawer__heading h4" id="cart-drawer-heading">
+                      {{ 'content.cart_title' | t }}
+                      {% render 'cart-bubble' %}
+                    </h2>
+                    <button ref="closeButton" on:click="cart-drawer-component/close" class="button close-button cart-drawer__close-button button-unstyled" aria-label="{{ 'actions.close_dialog' | t }}">
+                      <span class="svg-wrapper">{{- 'icon-close.svg' | inline_asset_content -}}</span>
+                    </button>
+                  </div>
+                  <scroll-hint class="cart-drawer__content" aria-label="{{ 'accessibility.cart' | t }}" style="--header-height: 60px;">
+                    <scroll-hint class="cart-drawer__items">
+                      {% render 'cart-products' %}
+                    </scroll-hint>
+                    <div class="cart-drawer__summary">
+                      {% render 'cart-summary', section_id: section.id %}
+                    </div>
+                  </scroll-hint>
+                {%- endif -%}
+              {% endcapture %}
+              {% render 'cart-items-component', children: cart_items_children, is_drawer: true, section_id: section.id %}
+            </div>
+          </dialog>
+        </cart-drawer-component>
+      {%- else -%}
+        {% comment %} Cart type is 'page' — just link to /cart {% endcomment %}
+        <a href="{{ routes.cart_url }}" class="paws-icon-btn" aria-label="{{ 'accessibility.cart' | t }}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          <span class="paws-cart-count"{% if cart.item_count == 0 %} style="display:none"{% endif %} data-cart-count>{{ cart.item_count }}</span>
+        </a>
+      {%- endif -%}
     </div>
+  </div>
+
+  {% comment %} Mobile drawer menu {% endcomment %}
+  <div class="paws-mobile-menu" data-paws-mobile-menu>
+    <button class="paws-mobile-menu-close" aria-label="Close menu" type="button" data-paws-mobile-menu-close>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" width="24" height="24"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <nav class="paws-mobile-nav">
+      {%- if menu != blank and linklists[menu].links.size > 0 -%}
+        {%- for link in linklists[menu].links -%}
+          <a href="{{ link.url }}">{{ link.title }}</a>
+        {%- endfor -%}
+      {%- else -%}
+        <a href="{{ routes.root_url }}">Home</a>
+        <a href="/collections/all">Shop</a>
+        <a href="/pages/about">About</a>
+        <a href="/pages/contact">Contact</a>
+      {%- endif -%}
+    </nav>
   </div>
 </header>
 
@@ -56,6 +150,32 @@
     }
     window.addEventListener('resize', calibrate);
   })();
+
+  // Mobile drawer menu
+  (function () {
+    var menu = document.querySelector('[data-paws-mobile-menu]');
+    var openBtn = document.querySelector('[data-paws-mobile-menu-open]');
+    var closeBtn = document.querySelector('[data-paws-mobile-menu-close]');
+    if (!menu || !openBtn) return;
+
+    function open() { menu.classList.add('open'); document.body.style.overflow = 'hidden'; }
+    function close() { menu.classList.remove('open'); document.body.style.overflow = ''; }
+
+    openBtn.addEventListener('click', open);
+    if (closeBtn) closeBtn.addEventListener('click', close);
+    menu.addEventListener('click', function (e) { if (e.target === menu) close(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+  })();
+
+  // Update cart count badge after add-to-cart
+  document.addEventListener('cart:updated', function () {
+    fetch('/cart.js').then(function (r) { return r.json(); }).then(function (cart) {
+      document.querySelectorAll('[data-cart-count]').forEach(function (el) {
+        el.textContent = cart.item_count;
+        el.style.display = cart.item_count > 0 ? '' : 'none';
+      });
+    });
+  });
 </script>
 
 {% schema %}

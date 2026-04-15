@@ -1,7 +1,19 @@
-{% comment %} Paws & Co. Bestsellers — filter pills + product grid from Shopify collection {% endcomment %}
-<section class="paws-bestsellers" id="{{ section.id }}">
+{% comment %}
+  Paws & Co. Bestsellers
+  ──────────────────────
+  Filter pills now pick COLLECTIONS, not tags/types. Each pill block has its own
+  collection picker. Clicking a pill shows products from that collection.
+
+  "All" pill shows the main section collection. Each additional pill is a
+  standalone collection tab.
+{% endcomment %}
+
+{%- assign main_collection = section.settings.collection -%}
+{%- assign max_products = section.settings.product_count | default: 8 -%}
+
+<section class="paws-bestsellers" id="section-{{ section.id }}">
   <div class="paws-wrap">
-    <div class="paws-section-head paws-reveal-up">
+    <div class="paws-section-head">
       <div>
         {% if section.settings.eyebrow != blank %}
           <span class="paws-eyebrow"><span>{{ section.settings.eyebrow_icon }}</span> {{ section.settings.eyebrow }}</span>
@@ -9,80 +21,62 @@
         <h2>{{ section.settings.heading }}</h2>
       </div>
       {% if section.settings.link_label != blank %}
-        <a href="{{ section.settings.link_url | default: '/collections/all' }}" class="paws-btn paws-btn--ink paws-btn--sm">{{ section.settings.link_label }} →</a>
+        <a href="{{ section.settings.link_url | default: main_collection.url | default: '/collections/all' }}" class="paws-btn paws-btn--ink paws-btn--sm">{{ section.settings.link_label }} →</a>
       {% endif %}
     </div>
 
-    {% if section.settings.show_filters %}
-      <div class="paws-filter-bar paws-reveal-up">
-        <button class="paws-filter-pill active" data-filter="all">Everything</button>
+    {% if section.settings.show_filters and section.blocks.size > 0 %}
+      <div class="paws-filter-bar">
+        {% if section.settings.show_all_pill %}
+          <button class="paws-filter-pill active" type="button" data-paws-filter="__all__">
+            {{ section.settings.all_pill_label | default: 'Everything' }}
+          </button>
+        {% endif %}
         {% for block in section.blocks %}
-          {% if block.type == 'filter' %}
-            <button class="paws-filter-pill" data-filter="{{ block.settings.filter_key }}" {{ block.shopify_attributes }}>{{ block.settings.label }}</button>
-          {% endif %}
+          {%- if block.type == 'filter' -%}
+            {%- assign block_collection = block.settings.collection -%}
+            {%- if block_collection != blank -%}
+              <button
+                class="paws-filter-pill{% unless section.settings.show_all_pill %}{% if forloop.first %} active{% endif %}{% endunless %}"
+                type="button"
+                data-paws-filter="{{ block_collection.handle }}"
+                {{ block.shopify_attributes }}
+              >{{ block.settings.label | default: block_collection.title }}</button>
+            {%- endif -%}
+          {%- endif -%}
         {% endfor %}
       </div>
     {% endif %}
 
-    <div class="paws-product-grid">
-      {%- assign source_collection = section.settings.collection -%}
-      {%- assign max_products = section.settings.product_count | default: 8 -%}
-      {%- if source_collection != blank and source_collection.products.size > 0 -%}
-        {%- for product in source_collection.products limit: max_products -%}
-          {%- assign product_type = product.type | downcase | handleize -%}
-          <a href="{{ product.url }}" class="paws-product paws-reveal-up" data-category="{{ product_type }}" data-product-id="{{ product.id }}">
-            <div class="paws-product-image">
-              {% if product.compare_at_price > product.price %}
-                {%- assign discount = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round -%}
-                <span class="paws-product-badge sale">-{{ discount }}%</span>
-              {% elsif product.tags contains 'new' %}
-                <span class="paws-product-badge new">New</span>
-              {% elsif product.tags contains 'bestseller' %}
-                <span class="paws-product-badge">Bestseller</span>
-              {% endif %}
-              <button class="paws-wishlist" type="button" aria-label="Add to wishlist" data-product-id="{{ product.id }}">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-              </button>
-              {% if product.featured_image %}
-                {{ product.featured_image | image_url: width: 700 | image_tag: loading: 'lazy', alt: product.title }}
-              {% endif %}
-            </div>
-            <div class="paws-product-info">
-              <div class="paws-product-meta">{{ product.type | default: 'Product' }}{% if product.vendor %} · {{ product.vendor }}{% endif %}</div>
-              <h3>{{ product.title }}</h3>
-              <div class="paws-product-rating">
-                <span class="stars">★★★★★</span>
-                <span>{{ product.metafields.reviews.rating.value | default: '4.9' }} ({{ product.metafields.reviews.count.value | default: '100' }})</span>
-              </div>
-              <div class="paws-product-footer">
-                <span class="paws-price">
-                  {% if product.compare_at_price > product.price %}<del>{{ product.compare_at_price | money }}</del>{% endif %}
-                  {{ product.price | money }}
-                </span>
-                <button class="paws-quick-add" type="button" aria-label="Quick add" data-variant-id="{{ product.selected_or_first_available_variant.id }}">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" width="18" height="18"><path d="M12 5v14M5 12h14"/></svg>
-                </button>
-              </div>
-            </div>
-          </a>
-        {%- endfor -%}
-      {%- else -%}
-        {%- for i in (1..8) -%}
-          <a href="#" class="paws-product paws-reveal-up" data-category="all">
-            <div class="paws-product-image">
-              <span class="paws-product-badge">Sample</span>
-              <button class="paws-wishlist" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
-              <div style="width: 100%; height: 100%; background: var(--paws-cream-deep); display: grid; place-items: center; color: var(--paws-ink); font-family: var(--paws-font-head); font-weight: 700;">Add products to collection</div>
-            </div>
-            <div class="paws-product-info">
-              <div class="paws-product-meta">Category · Type</div>
-              <h3>Sample Product {{ i }}</h3>
-              <div class="paws-product-rating"><span class="stars">★★★★★</span><span>4.9 (100)</span></div>
-              <div class="paws-product-footer"><span class="paws-price">$0</span><button class="paws-quick-add" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" width="18" height="18"><path d="M12 5v14M5 12h14"/></svg></button></div>
-            </div>
-          </a>
-        {%- endfor -%}
-      {%- endif -%}
+    {% comment %} Wrapper for filterable panels — each panel is one collection's product grid {% endcomment %}
+    <div class="paws-bestsellers-panels">
+      {% if section.settings.show_all_pill %}
+        {% render 'paws-product-panel',
+           panel_key: '__all__',
+           panel_collection: main_collection,
+           max_products: max_products,
+           is_active: true %}
+      {% endif %}
+
+      {%- assign first_panel_shown = section.settings.show_all_pill -%}
+      {% for block in section.blocks %}
+        {%- if block.type == 'filter' and block.settings.collection != blank -%}
+          {% render 'paws-product-panel',
+             panel_key: block.settings.collection.handle,
+             panel_collection: block.settings.collection,
+             max_products: max_products,
+             is_active: first_panel_shown == false %}
+          {%- assign first_panel_shown = true -%}
+        {%- endif -%}
+      {% endfor %}
+
+      {% if section.blocks.size == 0 or section.settings.show_filters == false %}
+        {% render 'paws-product-panel',
+           panel_key: '__main__',
+           panel_collection: main_collection,
+           max_products: max_products,
+           is_active: true %}
+      {% endif %}
     </div>
   </div>
 </section>
@@ -93,23 +87,28 @@
   "tag": "section",
   "class": "paws-section-bestsellers",
   "settings": [
+    { "type": "header", "content": "Section heading" },
     { "type": "text", "id": "eyebrow_icon", "label": "Eyebrow emoji", "default": "⭐" },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow label", "default": "top dogs (and cats)" },
     { "type": "richtext", "id": "heading", "label": "Heading", "default": "<p>The crowd pleasers</p>" },
     { "type": "text", "id": "link_label", "label": "Link label", "default": "Shop all" },
-    { "type": "url", "id": "link_url", "label": "Link URL" },
-    { "type": "collection", "id": "collection", "label": "Source collection" },
-    { "type": "range", "id": "product_count", "label": "Products to show", "min": 4, "max": 16, "step": 2, "default": 8 },
-    { "type": "checkbox", "id": "show_filters", "label": "Show filter pills", "default": true }
+    { "type": "url", "id": "link_url", "label": "Link URL (defaults to main collection)" },
+    { "type": "header", "content": "Products" },
+    { "type": "collection", "id": "collection", "label": "Default / 'All' collection", "info": "Shown when 'Everything' pill is active, or when filters are disabled." },
+    { "type": "range", "id": "product_count", "label": "Products per tab", "min": 4, "max": 16, "step": 2, "default": 8 },
+    { "type": "header", "content": "Filter pills" },
+    { "type": "checkbox", "id": "show_filters", "label": "Show filter pills", "default": true },
+    { "type": "checkbox", "id": "show_all_pill", "label": "Show 'Everything' pill first", "default": true },
+    { "type": "text", "id": "all_pill_label", "label": "'Everything' pill label", "default": "Everything" }
   ],
   "blocks": [
     {
       "type": "filter",
-      "name": "Filter pill",
-      "limit": 8,
+      "name": "Collection tab",
+      "limit": 10,
       "settings": [
-        { "type": "text", "id": "label", "label": "Label", "default": "Food & Treats" },
-        { "type": "text", "id": "filter_key", "label": "Filter key (matches product.type handle)", "default": "food" }
+        { "type": "collection", "id": "collection", "label": "Collection to show" },
+        { "type": "text", "id": "label", "label": "Pill label (defaults to collection title)" }
       ]
     }
   ],
@@ -117,10 +116,10 @@
     {
       "name": "Paws Bestsellers",
       "blocks": [
-        { "type": "filter", "settings": { "label": "Food & Treats", "filter_key": "food" } },
-        { "type": "filter", "settings": { "label": "Toys", "filter_key": "toys" } },
-        { "type": "filter", "settings": { "label": "Beds", "filter_key": "beds" } },
-        { "type": "filter", "settings": { "label": "Grooming", "filter_key": "grooming" } }
+        { "type": "filter" },
+        { "type": "filter" },
+        { "type": "filter" },
+        { "type": "filter" }
       ]
     }
   ]

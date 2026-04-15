@@ -1925,6 +1925,298 @@ html[data-paws-reveal-ready] .paws-reveal-up.visible {
   .paws-qty-control button { width: 22px; height: 22px; font-size: 0.9rem; }
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   SPACING RESET & STANDARDIZATION
+   ═══════════════════════════════════════════════════════════════ */
+/* Every paws-* top-level section gets consistent vertical breathing room.
+   Override Horizon's default shopify-section margins. */
+
+.shopify-section:has(.paws-hero-section),
+.shopify-section:has(.paws-features),
+.shopify-section:has(.paws-categories),
+.shopify-section:has(.paws-bestsellers),
+.shopify-section:has(.paws-promo),
+.shopify-section:has(.paws-stats),
+.shopify-section:has(.paws-testimonials),
+.shopify-section:has(.paws-journal),
+.shopify-section:has(.paws-newsletter),
+.shopify-section:has(.paws-values),
+.shopify-section:has(.paws-team),
+.shopify-section:has(.paws-timeline),
+.shopify-section:has(.paws-about-intro),
+.shopify-section:has(.paws-contact-section),
+.shopify-section:has(.paws-faq-section),
+.shopify-section:has(.paws-map-section),
+.shopify-section:has(.paws-reviews-section),
+.shopify-section:has(.paws-related),
+.shopify-section:has(.paws-shop-section),
+.shopify-section:has(.paws-pdp-section),
+.shopify-section:has(.paws-page-header) {
+  margin: 0;
+  padding: 0;
+}
+
+/* Hero has no top padding (sits right below header) */
+.paws-hero-section { padding: 0; }
+
+/* All other paws sections: consistent 5rem vertical padding */
+.paws-features,
+.paws-categories,
+.paws-bestsellers,
+.paws-promo,
+.paws-stats,
+.paws-testimonials,
+.paws-journal,
+.paws-newsletter,
+.paws-values,
+.paws-team,
+.paws-timeline,
+.paws-about-intro,
+.paws-contact-section,
+.paws-faq-section,
+.paws-map-section,
+.paws-reviews-section,
+.paws-related,
+.paws-shop-section {
+  padding-block: 5rem;
+  margin: 0;
+}
+
+/* Page header (yellow strip) gets tighter vertical padding */
+.paws-page-header {
+  padding-block: 3.5rem 2.5rem;
+  margin: 0;
+}
+
+/* Breadcrumb strip */
+.paws-breadcrumb-strip {
+  padding-block: 1.25rem;
+  margin: 0;
+}
+
+/* PDP section below breadcrumb */
+.paws-pdp-section {
+  padding-block: 3rem 5rem !important;
+}
+
+/* Section heads: consistent margin */
+.paws-section-head {
+  margin-bottom: 2.5rem;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FILTER PANELS — collection-tab switcher
+   ═══════════════════════════════════════════════════════════════ */
+.paws-bestsellers-panels {
+  position: relative;
+}
+
+.paws-product-panel {
+  display: none;
+  animation: pawsPanelIn 0.4s ease;
+}
+.paws-product-panel.active {
+  display: block;
+}
+
+@keyframes pawsPanelIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.paws-product-panel .paws-product {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.paws-panel-empty {
+  padding: 4rem 2rem;
+  text-align: center;
+  background: var(--paws-cream-deep);
+  border: var(--paws-border);
+  border-radius: var(--paws-radius-lg);
+  box-shadow: var(--paws-shadow);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE DRAWER MENU (paws-header)
+   ═══════════════════════════════════════════════════════════════ */
+.paws-mobile-menu-toggle {
+  display: none; /* shown only on mobile */
+}
+
+.paws-mobile-menu {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 26, 26, 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 999;
+}
+
+.paws-mobile-menu.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.paws-mobile-menu-close {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  width: 44px;
+  height: 44px;
+  background: var(--paws-white);
+  border: var(--paws-border);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  box-shadow: var(--paws-shadow-sm);
+}
+
+.paws-mobile-nav {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(85vw, 340px);
+  background: var(--paws-cream);
+  border-left: var(--paws-border);
+  padding: 5rem 2rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  overflow-y: auto;
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.paws-mobile-menu.open .paws-mobile-nav {
+  transform: translateX(0);
+}
+
+.paws-mobile-nav a {
+  font-family: var(--paws-font-head);
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--paws-ink);
+  padding: 0.9rem 0;
+  border-bottom: 2px dashed rgba(26, 26, 26, 0.15);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.paws-mobile-nav a:hover,
+.paws-mobile-nav a:focus {
+  color: var(--paws-coral);
+}
+
+@media (max-width: 749px) {
+  .paws-mobile-menu-toggle {
+    display: grid;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CART DRAWER — Paws styling on top of Horizon's cart-drawer-component
+   ═══════════════════════════════════════════════════════════════ */
+.paws-cart-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+/* Horizon's cart drawer dialog, restyled for Paws */
+.cart-drawer__dialog {
+  background: var(--paws-cream) !important;
+  border-left: var(--paws-border) !important;
+  padding: 0 !important;
+}
+
+.cart-drawer__inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.cart-drawer__header {
+  padding: 1.5rem;
+  border-bottom: var(--paws-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cart-drawer__heading {
+  font-family: var(--paws-font-display) !important;
+  font-size: 1.5rem !important;
+  font-weight: 400 !important;
+  margin: 0 !important;
+}
+
+.cart-drawer__close-button {
+  width: 40px !important;
+  height: 40px !important;
+  border: var(--paws-border) !important;
+  border-radius: 50% !important;
+  background: var(--paws-white) !important;
+  box-shadow: var(--paws-shadow-sm) !important;
+  display: grid !important;
+  place-items: center !important;
+  transition: transform 0.2s ease !important;
+}
+
+.cart-drawer__close-button:hover {
+  transform: translate(-2px, -2px) !important;
+  box-shadow: var(--paws-shadow) !important;
+}
+
+.cart-drawer__content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.5rem;
+}
+
+.cart-drawer__summary {
+  border-top: var(--paws-border);
+  padding: 1.5rem;
+  background: var(--paws-white);
+}
+
+/* Checkout button paws-styled */
+.cart__checkout-button {
+  width: 100%;
+  padding: 1rem 1.5rem !important;
+  background: var(--paws-coral) !important;
+  color: var(--paws-white) !important;
+  border: var(--paws-border) !important;
+  border-radius: 999px !important;
+  box-shadow: var(--paws-shadow) !important;
+  font-family: var(--paws-font-head) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.02em;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.cart__checkout-button:hover {
+  transform: translate(-2px, -2px) !important;
+  box-shadow: var(--paws-shadow-lg) !important;
+  background: var(--paws-coral-dark) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   HEADER MOBILE MENU TOGGLE ORDER — toggle first on mobile
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 749px) {
+  .paws-header-actions {
+    order: 0;
+  }
+  .paws-mobile-menu-toggle {
+    order: -1;
+  }
+}
+
 /* ── Horizon CSS variable fallbacks ───────────────────────── */
 /* Horizon's theme.liquid JS sets these based on <header-component>. Since paws-header
    isn't that custom element, the JS returns early and variables stay undefined.

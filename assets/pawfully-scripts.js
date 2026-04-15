@@ -124,41 +124,55 @@ function initHeroSlider() {
   });
 }
 
-// ─── 3. PRODUCT FILTER PILLS ─────────────────────────────────────────────────
+// ─── 3. PRODUCT FILTER PILLS (collection-tab switcher) ───────────────────────
 function initFilterPills() {
-  const filterBars = document.querySelectorAll('.paws-filter-bar');
-  if (!filterBars.length) return;
+  document.querySelectorAll('.paws-bestsellers').forEach((section) => {
+    const pills = section.querySelectorAll('[data-paws-filter]');
+    const panels = section.querySelectorAll('[data-paws-panel]');
+    if (!pills.length || !panels.length) return;
 
-  filterBars.forEach((bar) => {
+    pills.forEach((pill) => {
+      pill.addEventListener('click', () => {
+        const key = pill.dataset.pawsFilter;
+
+        pills.forEach((p) => p.classList.toggle('active', p === pill));
+
+        panels.forEach((panel) => {
+          const match = panel.dataset.pawsPanel === key;
+          if (match) {
+            panel.classList.add('active');
+            // Fade the products in
+            panel.querySelectorAll('.paws-product').forEach((p, i) => {
+              p.style.opacity = '0';
+              p.style.transform = 'translateY(12px)';
+              setTimeout(() => {
+                p.style.opacity = '1';
+                p.style.transform = 'translateY(0)';
+              }, 40 + i * 25);
+            });
+          } else {
+            panel.classList.remove('active');
+          }
+        });
+      });
+    });
+  });
+
+  // Legacy shop sidebar filter pills (non-bestsellers) — simple category toggle
+  document.querySelectorAll('.paws-shop-main .paws-filter-bar').forEach((bar) => {
     const pills = bar.querySelectorAll('.paws-filter-pill');
-    const grid = bar.closest('section, .paws-shop-main')?.querySelector('.paws-product-grid');
-    if (!grid) return;
-
+    const grid = bar.closest('.paws-shop-main')?.querySelector('.paws-shop-grid');
+    if (!grid || !pills.length) return;
     const products = grid.querySelectorAll('.paws-product');
 
     pills.forEach((pill) => {
       pill.addEventListener('click', () => {
         pills.forEach((p) => p.classList.remove('active'));
         pill.classList.add('active');
-
         const filter = pill.dataset.filter || 'all';
-
-        products.forEach((product, i) => {
+        products.forEach((product) => {
           const cat = product.dataset.category || '';
-          const show = filter === 'all' || cat === filter;
-
-          product.style.opacity = '0';
-          product.style.transform = 'translateY(12px)';
-
-          setTimeout(() => {
-            product.style.display = show ? '' : 'none';
-            if (show) {
-              requestAnimationFrame(() => {
-                product.style.opacity = '1';
-                product.style.transform = 'translateY(0)';
-              });
-            }
-          }, i * 40);
+          product.style.display = filter === 'all' || cat === filter ? '' : 'none';
         });
       });
     });

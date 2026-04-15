@@ -1,0 +1,80 @@
+{%- doc -%}
+  Paws & Co. Product Panel
+
+  Renders a collection's products as a grid inside a filterable panel.
+  Used by paws-bestsellers for collection-based filter tabs.
+
+  @param {string} panel_key       Data attribute to identify the panel (e.g. collection handle or "__all__").
+  @param {object} panel_collection The collection object to pull products from.
+  @param {number} max_products    Limit for for loop.
+  @param {boolean} is_active      If true, this panel is visible on load.
+{%- enddoc -%}
+
+<div
+  class="paws-product-panel{% if is_active %} active{% endif %}"
+  data-paws-panel="{{ panel_key }}"
+>
+  {%- if panel_collection != blank and panel_collection.products.size > 0 -%}
+    <div class="paws-product-grid">
+      {%- for product in panel_collection.products limit: max_products -%}
+        {%- assign current_variant = product.selected_or_first_available_variant -%}
+        <a href="{{ product.url }}" class="paws-product" data-product-id="{{ product.id }}">
+          <div class="paws-product-image">
+            {%- if product.compare_at_price > product.price -%}
+              {%- assign discount = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round -%}
+              <span class="paws-product-badge sale">-{{ discount }}%</span>
+            {%- elsif product.tags contains 'new' -%}
+              <span class="paws-product-badge new">New</span>
+            {%- elsif product.tags contains 'bestseller' -%}
+              <span class="paws-product-badge">Bestseller</span>
+            {%- endif -%}
+            <button class="paws-wishlist" type="button" aria-label="Add to wishlist" data-product-id="{{ product.id }}">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </button>
+            {%- if product.featured_image -%}
+              {{ product.featured_image | image_url: width: 700 | image_tag: loading: 'lazy', alt: product.title }}
+            {%- endif -%}
+          </div>
+          <div class="paws-product-info">
+            <div class="paws-product-meta">
+              {{- product.type | default: 'Product' -}}
+              {%- if product.vendor != blank -%} · {{ product.vendor }}{%- endif -%}
+            </div>
+            <h3>{{ product.title }}</h3>
+            {%- if product.metafields.reviews.rating.value -%}
+              <div class="paws-product-rating">
+                <span class="stars">★★★★★</span>
+                <span>{{ product.metafields.reviews.rating.value }} ({{ product.metafields.reviews.count.value | default: 0 }})</span>
+              </div>
+            {%- endif -%}
+            <div class="paws-product-footer">
+              <span class="paws-price">
+                {%- if product.compare_at_price > product.price -%}
+                  <del>{{ product.compare_at_price | money }}</del>
+                {%- endif -%}
+                {{ product.price | money }}
+              </span>
+              <button class="paws-quick-add" type="button" aria-label="Quick add to cart" data-variant-id="{{ current_variant.id }}">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" width="18" height="18"><path d="M12 5v14M5 12h14"/></svg>
+              </button>
+            </div>
+          </div>
+        </a>
+      {%- endfor -%}
+    </div>
+  {%- else -%}
+    <div class="paws-panel-empty">
+      <span style="font-size: 2.5rem; display: block; margin-bottom: 0.75rem;">🐾</span>
+      <p style="font-family: var(--paws-font-head); font-weight: 700; margin-bottom: 0.5rem;">
+        {%- if panel_collection == blank -%}
+          Pick a collection for this tab
+        {%- else -%}
+          No products in this collection yet
+        {%- endif -%}
+      </p>
+      {%- if panel_collection != blank -%}
+        <a href="{{ panel_collection.url }}" class="paws-btn paws-btn--sm">View collection</a>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+</div>
