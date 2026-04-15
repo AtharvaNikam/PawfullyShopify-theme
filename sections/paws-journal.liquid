@@ -14,9 +14,9 @@
     </div>
 
     <div class="paws-blog-grid">
-      {%- assign blog_handle = section.settings.blog -%}
-      {%- if blog_handle != blank and blogs[blog_handle].articles.size > 0 -%}
-        {%- for article in blogs[blog_handle].articles limit: 3 -%}
+      {%- assign source_blog = section.settings.blog -%}
+      {%- if source_blog != blank and source_blog.articles.size > 0 -%}
+        {%- for article in source_blog.articles limit: 3 -%}
           <a href="{{ article.url }}" class="paws-blog-card paws-reveal-up{% if forloop.index0 > 0 %} delay-{{ forloop.index0 }}{% endif %}">
             <div class="paws-blog-image">
               {% if article.image != blank %}

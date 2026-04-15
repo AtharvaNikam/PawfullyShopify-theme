@@ -9,6 +9,15 @@ function initScrollReveal() {
   const revealEls = document.querySelectorAll('.paws-reveal-up');
   if (!revealEls.length) return;
 
+  // Opt into reveal animation — CSS keeps elements VISIBLE unless this flag is set.
+  // That way, if the script fails for any reason, sections still render.
+  if (!('IntersectionObserver' in window)) {
+    revealEls.forEach((el) => el.classList.add('visible'));
+    return;
+  }
+
+  document.documentElement.setAttribute('data-paws-reveal-ready', '');
+
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -18,10 +27,18 @@ function initScrollReveal() {
         }
       });
     },
-    { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+    { threshold: 0.05, rootMargin: '0px 0px -20px 0px' }
   );
 
-  revealEls.forEach((el) => observer.observe(el));
+  revealEls.forEach((el) => {
+    // If element is already in viewport on load, mark it visible immediately
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      el.classList.add('visible');
+    } else {
+      observer.observe(el);
+    }
+  });
 }
 
 // ─── 2. HERO SLIDER ──────────────────────────────────────────────────────────

@@ -25,10 +25,10 @@
     {% endif %}
 
     <div class="paws-product-grid">
-      {%- assign collection_handle = section.settings.collection -%}
+      {%- assign source_collection = section.settings.collection -%}
       {%- assign max_products = section.settings.product_count | default: 8 -%}
-      {%- if collection_handle != blank and collections[collection_handle].products.size > 0 -%}
-        {%- for product in collections[collection_handle].products limit: max_products -%}
+      {%- if source_collection != blank and source_collection.products.size > 0 -%}
+        {%- for product in source_collection.products limit: max_products -%}
           {%- assign product_type = product.type | downcase | handleize -%}
           <a href="{{ product.url }}" class="paws-product paws-reveal-up" data-category="{{ product_type }}" data-product-id="{{ product.id }}">
             <div class="paws-product-image">

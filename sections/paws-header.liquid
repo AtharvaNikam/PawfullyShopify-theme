@@ -37,6 +37,27 @@
   </div>
 </header>
 
+<script>
+  // Calibrate --header-height / --header-group-height since paws-header isn't <header-component>
+  (function () {
+    function calibrate() {
+      var header = document.querySelector('.paws-header');
+      var group = document.getElementById('header-group');
+      if (!header || !group) return;
+      var headerH = header.offsetHeight;
+      var groupH = group.offsetHeight;
+      document.body.style.setProperty('--header-height', headerH + 'px');
+      document.body.style.setProperty('--header-group-height', groupH + 'px');
+      document.body.style.setProperty('--top-row-height', headerH + 'px');
+    }
+    calibrate();
+    if (document.readyState !== 'complete') {
+      window.addEventListener('load', calibrate);
+    }
+    window.addEventListener('resize', calibrate);
+  })();
+</script>
+
 {% schema %}
 {
   "name": "Paws Header",

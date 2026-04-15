@@ -1,16 +1,69 @@
-{% comment %} Paws & Co. Page Header (yellow hero) for inner pages {% endcomment %}
+{% comment %} Paws & Co. Page Header (yellow hero) for inner pages — supports dynamic source {% endcomment %}
+{%- liquid
+  assign resolved_heading = section.settings.heading
+  assign resolved_subtext = section.settings.subtext
+  assign resolved_crumb = section.settings.current_label
+
+  case section.settings.dynamic_source
+    when 'collection'
+      if collection.title != blank
+        capture resolved_heading
+          echo '<p>'
+          echo collection.title
+          echo '</p>'
+        endcapture
+      endif
+      if collection.description != blank and resolved_subtext == blank
+        assign resolved_subtext = collection.description | strip_html | truncate: 180
+      endif
+      if resolved_crumb == blank
+        assign resolved_crumb = collection.title
+      endif
+    when 'page'
+      if page.title != blank
+        capture resolved_heading
+          echo '<p>'
+          echo page.title
+          echo '</p>'
+        endcapture
+      endif
+      if resolved_crumb == blank
+        assign resolved_crumb = page.title
+      endif
+    when 'blog'
+      if blog.title != blank
+        capture resolved_heading
+          echo '<p>'
+          echo blog.title
+          echo '</p>'
+        endcapture
+      endif
+      if resolved_crumb == blank
+        assign resolved_crumb = blog.title
+      endif
+    when 'article'
+      if article.title != blank
+        capture resolved_heading
+          echo '<p>'
+          echo article.title
+          echo '</p>'
+        endcapture
+      endif
+  endcase
+-%}
+
 <section class="paws-page-header">
   <div class="paws-wrap">
     {% if section.settings.show_breadcrumb %}
       <div class="paws-breadcrumb">
         <a href="{{ routes.root_url }}">Home</a>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="m9 18 6-6-6-6"/></svg>
-        <span>{{ section.settings.current_label | default: page.title }}</span>
+        <span>{{ resolved_crumb | default: 'Page' }}</span>
       </div>
     {% endif %}
-    <h1>{{ section.settings.heading }}</h1>
-    {% if section.settings.subtext != blank %}
-      <p>{{ section.settings.subtext }}</p>
+    <h1>{{ resolved_heading }}</h1>
+    {% if resolved_subtext != blank %}
+      <p>{{ resolved_subtext }}</p>
     {% endif %}
   </div>
 </section>
@@ -21,10 +74,21 @@
   "tag": "section",
   "class": "paws-section-page-header",
   "settings": [
+    { "type": "select", "id": "dynamic_source", "label": "Dynamic source",
+      "info": "Pulls heading/subtext from the current page context. Use 'None' to set static values below.",
+      "options": [
+        { "value": "none", "label": "None (use static heading)" },
+        { "value": "collection", "label": "Current collection" },
+        { "value": "page", "label": "Current page" },
+        { "value": "blog", "label": "Current blog" },
+        { "value": "article", "label": "Current article" }
+      ],
+      "default": "none"
+    },
     { "type": "checkbox", "id": "show_breadcrumb", "label": "Show breadcrumb", "default": true },
-    { "type": "text", "id": "current_label", "label": "Current page label (breadcrumb)" },
-    { "type": "richtext", "id": "heading", "label": "Heading", "default": "<p>Page title</p>" },
-    { "type": "textarea", "id": "subtext", "label": "Subtext" }
+    { "type": "text", "id": "current_label", "label": "Breadcrumb label (overrides dynamic)" },
+    { "type": "richtext", "id": "heading", "label": "Static heading", "default": "<p>Page title</p>" },
+    { "type": "textarea", "id": "subtext", "label": "Static subtext" }
   ],
   "presets": [
     { "name": "Paws Page Header" }

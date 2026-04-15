@@ -112,6 +112,14 @@
           </form>
         </div>
 
+        {%- if collection.products.size == 0 -%}
+          <div class="paws-empty-state" style="padding: 4rem 2rem; text-align: center; background: var(--paws-cream-deep); border: var(--paws-border); border-radius: var(--paws-radius-lg); box-shadow: var(--paws-shadow);">
+            <span style="font-size: 3rem; display: block; margin-bottom: 1rem;">🐾</span>
+            <h3 style="font-family: var(--paws-font-display); font-size: 1.75rem; margin-bottom: 0.5rem;">No products yet</h3>
+            <p style="margin-bottom: 1.5rem;">This collection is still sniffing around for its first products. Check back soon, or browse our full catalog.</p>
+            <a href="{{ routes.all_products_collection_url }}" class="paws-btn paws-btn--coral">Browse everything</a>
+          </div>
+        {%- else -%}
         <div class="paws-shop-grid">
           {%- for product in collection.products -%}
             <a href="{{ product.url }}" class="paws-product paws-reveal-up" data-product-id="{{ product.id }}">
@@ -169,6 +177,7 @@
             {% endif %}
           </div>
         {% endif %}
+        {%- endif -%}
       </div>
     </div>
   </div>
