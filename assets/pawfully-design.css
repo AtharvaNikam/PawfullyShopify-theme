@@ -1519,12 +1519,16 @@ html[data-paws-reveal-ready] .paws-reveal-up.visible {
 }
 .paws-float { animation: pawsFloat 3s ease-in-out infinite; }
 
-/* ── Responsive ───────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE — Three breakpoints: 1100px / 749px / 480px
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Tablet & below (1100px) ────────────────────────────────── */
 @media (max-width: 1100px) {
-  .paws-category-grid    { grid-template-columns: repeat(2, 1fr); }
+  .paws-category-grid,
   .paws-product-grid,
-  .paws-shop-grid        { grid-template-columns: repeat(2, 1fr); }
-  .paws-features-grid    { grid-template-columns: repeat(2, 1fr); }
+  .paws-shop-grid,
+  .paws-features-grid,
   .paws-team-grid        { grid-template-columns: repeat(2, 1fr); }
   .paws-values-grid      { grid-template-columns: 1fr; }
   .paws-timeline-track   { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
@@ -1536,7 +1540,7 @@ html[data-paws-reveal-ready] .paws-reveal-up.visible {
   .paws-contact-layout,
   .paws-about-grid,
   .paws-promo-inner,
-  .paws-reviews-grid     { grid-template-columns: 1fr; }
+  .paws-reviews-grid     { grid-template-columns: 1fr; gap: 2rem; }
   .paws-shop-layout      { grid-template-columns: 1fr; }
   .paws-shop-sidebar     { position: static; }
   .paws-slide            { grid-template-columns: 1fr; text-align: center; }
@@ -1546,21 +1550,379 @@ html[data-paws-reveal-ready] .paws-reveal-up.visible {
   .paws-hero-sticker     { display: none; }
 }
 
-@media (max-width: 680px) {
+/* ── Mobile (749px) — Standard Shopify mobile breakpoint ────── */
+@media (max-width: 749px) {
+  :root {
+    --paws-pad: 1rem;
+  }
+
+  .paws-wrap {
+    padding-inline: 1rem;
+  }
+
+  /* Section padding reduced on mobile */
+  section[class*="paws-"],
+  .paws-bestsellers,
+  .paws-categories,
+  .paws-features,
+  .paws-promo,
+  .paws-stats,
+  .paws-testimonials,
+  .paws-journal,
+  .paws-newsletter {
+    padding-block: 3rem;
+  }
+
+  /* Header — compact, hide inline nav, keep logo + actions */
+  .paws-header-inner {
+    padding: 0.75rem 1rem;
+    gap: 0.75rem;
+  }
+  .paws-logo {
+    font-size: 1.35rem;
+    gap: 0.5rem;
+  }
+  .paws-logo-badge {
+    width: 36px; height: 36px;
+  }
+  .paws-logo-badge svg { width: 20px; height: 20px; }
+  .paws-nav {
+    display: none; /* Hide desktop inline nav on mobile */
+  }
+  .paws-header-actions {
+    gap: 0.4rem;
+  }
+  .paws-icon-btn {
+    width: 40px; height: 40px;
+  }
+  .paws-icon-btn svg { width: 18px; height: 18px; }
+  .paws-cart-count {
+    width: 20px; height: 20px;
+    font-size: 0.65rem;
+  }
+
+  /* Hero slider — fixed tall height (slides use position:absolute + stack vertically) */
+  .paws-slider {
+    height: clamp(640px, 105vh, 820px);
+  }
+  .paws-slide {
+    padding: 2rem 1.25rem 4.5rem;
+    gap: 1.5rem;
+    overflow-y: auto;
+  }
+  .paws-slide-content h1 {
+    font-size: clamp(2.25rem, 10vw, 3.5rem) !important;
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+  .paws-slide-content p {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .paws-slide-tag {
+    font-size: 0.7rem;
+    padding: 0.35rem 0.85rem;
+  }
+  .paws-slide-ctas {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.75rem;
+  }
+  .paws-slide-ctas .paws-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .paws-slide-visual {
+    max-width: 80%;
+    margin: 0 auto;
+  }
+  .paws-slide-visual img {
+    max-height: 280px;
+    width: auto;
+  }
+  .paws-slider-nav {
+    bottom: 1rem;
+  }
+
+  /* Buttons — tighter on mobile */
+  .paws-btn {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.9rem;
+  }
+  .paws-btn--lg {
+    padding: 0.85rem 1.5rem;
+    font-size: 1rem;
+  }
+  .paws-btn--sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+  }
+
+  /* Section heading + action → stack */
+  .paws-section-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .paws-section-head h2 {
+    font-size: clamp(1.75rem, 6vw, 2.5rem) !important;
+    line-height: 1.1;
+  }
+  .paws-eyebrow {
+    font-size: 0.75rem;
+  }
+
+  /* Grids collapse to 1 column */
   .paws-category-grid,
   .paws-product-grid,
   .paws-shop-grid,
   .paws-team-grid,
-  .paws-faq-grid         { grid-template-columns: 1fr; }
-  .paws-footer-grid      { grid-template-columns: 1fr; }
-  .paws-slider           { height: auto; min-height: 620px; }
-  .paws-slide            { padding: 2rem 1.25rem; }
-  .paws-field-row        { grid-template-columns: 1fr; }
-  .paws-newsletter-form  { flex-direction: column; border-radius: var(--paws-radius-lg); }
-  .paws-newsletter-form button { width: 100%; margin-top: 0.5rem; }
-  .paws-stats-grid       { grid-template-columns: 1fr 1fr; }
-  .paws-pdp-actions      { flex-direction: column; }
-  .paws-pdp-perks        { grid-template-columns: 1fr; }
+  .paws-faq-grid,
+  .paws-features-grid,
+  .paws-footer-grid,
+  .paws-values-grid,
+  .paws-timeline-track,
+  .paws-blog-grid        { grid-template-columns: 1fr !important; }
+
+  /* Stats stay 2-col (numbers look better paired) */
+  .paws-stats-grid       { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+  .paws-stat-num         { font-size: clamp(2.5rem, 10vw, 3.5rem); }
+
+  /* Filter bar scrolls horizontally */
+  .paws-filter-bar {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    flex-wrap: nowrap;
+    padding-bottom: 0.5rem;
+    margin-inline: -1rem;
+    padding-inline: 1rem;
+  }
+  .paws-filter-bar::-webkit-scrollbar { display: none; }
+  .paws-filter-pill {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  /* Testimonials — horizontal scroll snap on mobile */
+  .paws-testimonial-track {
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 1rem;
+    padding-inline: 1rem;
+    margin-inline: -1rem;
+  }
+  .paws-testimonial {
+    scroll-snap-align: start;
+    min-width: 85%;
+    max-width: 85%;
+    flex-shrink: 0;
+  }
+
+  /* Promo banner — stacks, sticker smaller */
+  .paws-promo-inner { gap: 1.5rem; }
+  .paws-promo h2   { font-size: clamp(1.75rem, 7vw, 2.5rem); }
+  .paws-promo-sticker {
+    width: 90px; height: 90px;
+    font-size: 0.95rem;
+    top: -12px; right: -12px;
+  }
+
+  /* Breadcrumb — horizontal scroll if it overflows */
+  .paws-breadcrumb-strip { padding: 1rem 0; }
+  .paws-breadcrumb {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    padding-bottom: 0.25rem;
+  }
+  .paws-breadcrumb::-webkit-scrollbar { display: none; }
+
+  /* PDP — single column layout stacks nicely */
+  .paws-pdp-section { padding-top: 1.5rem !important; }
+  .paws-pdp-layout { gap: 2rem; }
+  .paws-pdp-info h1 { font-size: clamp(1.75rem, 7vw, 2.25rem); }
+  .paws-pdp-price { font-size: 2rem; }
+  .paws-pdp-save { transform: rotate(-2deg); font-size: 0.75rem; padding: 0.25rem 0.6rem; }
+  .paws-pdp-description { font-size: 0.95rem; }
+
+  /* PDP gallery — thumbs in 4-col grid still, but smaller */
+  .paws-gallery-thumbs { grid-template-columns: repeat(4, 1fr); gap: 0.5rem; }
+  .paws-gallery-main { border-radius: var(--paws-radius); }
+  .paws-gallery-pill { top: 0.75rem; left: 0.75rem; font-size: 0.7rem; padding: 0.3rem 0.7rem; }
+
+  /* PDP actions stack — add-to-cart full width */
+  .paws-pdp-actions {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .paws-pdp-qty, .paws-qty-wrap {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .paws-pdp-actions .paws-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* PDP perks — 1 column */
+  .paws-pdp-perks { grid-template-columns: 1fr; gap: 0.5rem; padding: 1rem; }
+  .paws-perk { font-size: 0.85rem; }
+
+  /* PDP accordion — larger tap targets */
+  .paws-acc-header,
+  .paws-acc-trigger {
+    padding: 1rem 0;
+    font-size: 0.95rem;
+  }
+  .paws-acc-body { font-size: 0.9rem; }
+
+  /* Option buttons — wrap and scale */
+  .paws-option-buttons { gap: 0.4rem; }
+  .paws-opt {
+    padding: 0.55rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  /* Reviews — stack summary + list */
+  .paws-reviews-grid { gap: 1.5rem; }
+  .paws-review-summary { padding: 1.5rem; }
+  .paws-big-rating { font-size: 3rem; }
+  .paws-review { padding: 1.25rem; }
+  .paws-review-head { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+
+  /* Shop toolbar wraps */
+  .paws-shop-toolbar { flex-direction: column; align-items: stretch; gap: 0.75rem; }
+  .paws-sort-select { width: 100%; }
+
+  /* Cart drawer — full width on mobile */
+  .paws-cart-drawer {
+    width: 100vw;
+    max-width: 100vw;
+  }
+  .paws-cart-item {
+    gap: 0.75rem;
+    padding: 0.75rem 0;
+  }
+  .paws-cart-item img {
+    width: 60px; height: 60px;
+  }
+  .paws-cart-item-info h4 { font-size: 0.85rem; }
+  .paws-cart-body, .paws-cart-head, .paws-cart-foot { padding: 1rem; }
+
+  /* Contact form */
+  .paws-field-row { grid-template-columns: 1fr; gap: 0; }
+  .paws-contact-form { padding: 1.5rem; }
+  .paws-contact-card { padding: 1.25rem; }
+
+  /* Newsletter form — stack input + button */
+  .paws-newsletter-form {
+    flex-direction: column;
+    border-radius: var(--paws-radius-lg);
+    padding: 0.5rem;
+    gap: 0.5rem;
+  }
+  .paws-newsletter-form input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+  }
+  .paws-newsletter-form button {
+    width: 100%;
+    padding: 0.85rem 1.5rem;
+  }
+  .paws-newsletter h2 { font-size: clamp(1.75rem, 6vw, 2.25rem); }
+
+  /* Footer — single column with centered alignment */
+  .paws-footer { padding: 2.5rem 0 1.5rem; }
+  .paws-footer-grid { gap: 2rem; text-align: left; }
+  .paws-footer-brand p { max-width: 100%; }
+  .paws-footer-bottom {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+    padding-top: 1.5rem;
+    margin-top: 2rem;
+  }
+  .paws-socials { justify-content: flex-start; }
+
+  /* Feature strip — 1-col, reduce padding */
+  .paws-features { padding: 2.5rem 0; }
+  .paws-feature { padding: 0.5rem; }
+
+  /* Category cards — images a bit smaller */
+  .paws-cat-card { padding: 1.5rem; }
+  .paws-cat-icon {
+    width: 120px; height: 120px;
+  }
+
+  /* Product card on mobile */
+  .paws-product-image { aspect-ratio: 1; }
+
+  /* Sticky PDP add-to-cart safety */
+  .paws-pdp-gallery { margin-bottom: 0; }
+
+  /* Timeline items — stack centered */
+  .paws-timeline-track { grid-template-columns: 1fr; gap: 1.5rem; }
+  .paws-timeline-item { text-align: center; }
+  .paws-timeline-dot { margin: 0 auto 1rem; }
+
+  /* Values & team — ensure full-width */
+  .paws-value-card, .paws-team-card { padding: 1.5rem; }
+
+  /* About visual sticker — scale down */
+  .paws-about-sticker {
+    font-size: 0.9rem;
+    padding: 0.7rem 1rem;
+    bottom: -10px; left: -10px;
+  }
+
+  /* FAQ cards */
+  .paws-faq-card { padding: 1.25rem; }
+
+  /* Page header */
+  .paws-page-header { padding: 3rem 0 2rem; }
+  .paws-page-header h1 {
+    font-size: clamp(2rem, 8vw, 3rem);
+  }
+  .paws-page-header p { font-size: 0.95rem; }
+
+  /* Announcement bar text on mobile */
+  .paws-marquee-track { gap: 1.5rem; }
+}
+
+/* ── Small mobile (480px) — absolute minimum widths ─────────── */
+@media (max-width: 480px) {
+  .paws-wrap { padding-inline: 0.85rem; }
+
+  .paws-logo { font-size: 1.15rem; }
+  .paws-logo-badge { width: 32px; height: 32px; }
+  .paws-logo-badge svg { width: 18px; height: 18px; }
+  .paws-icon-btn { width: 36px; height: 36px; }
+
+  .paws-slide-content h1 { font-size: clamp(2rem, 11vw, 2.75rem) !important; }
+  .paws-slide-content p { font-size: 0.9rem; }
+
+  .paws-section-head h2 { font-size: clamp(1.5rem, 7vw, 2rem) !important; }
+
+  .paws-stat-num { font-size: clamp(2rem, 9vw, 2.75rem); }
+  .paws-stat-label { font-size: 0.8rem; }
+
+  .paws-btn { padding: 0.7rem 1rem; font-size: 0.85rem; }
+  .paws-btn--lg { padding: 0.8rem 1.25rem; font-size: 0.95rem; }
+
+  .paws-gallery-thumbs { grid-template-columns: repeat(4, 1fr); gap: 0.35rem; }
+  .paws-thumb { border-radius: 10px; }
+
+  .paws-testimonial { min-width: 90%; max-width: 90%; padding: 1.5rem; }
+  .paws-quote-mark { font-size: 2.5rem; }
+
+  .paws-pdp-price { font-size: 1.75rem; }
+
+  .paws-cart-item-right .paws-price { font-size: 1rem; }
+  .paws-qty-control { padding: 0.1rem 0.35rem; }
+  .paws-qty-control button { width: 22px; height: 22px; font-size: 0.9rem; }
 }
 
 /* ── Horizon CSS variable fallbacks ───────────────────────── */
