@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "page_header": {
@@ -12,12 +21,45 @@
     "contact": {
       "type": "paws-contact",
       "blocks": {
-        "c1": { "type": "info_card", "settings": { "icon": "mail", "title": "Email us", "body": "hello@pawsandco.com" } },
-        "c2": { "type": "info_card", "settings": { "icon": "phone", "title": "Call us", "body": "(503) 555-PAWS" } },
-        "c3": { "type": "info_card", "settings": { "icon": "map", "title": "Visit our shop", "body": "422 NW 23rd Ave<br>Portland, OR 97210" } },
-        "c4": { "type": "info_card", "settings": { "icon": "clock", "title": "Shop hours", "body": "Mon–Sat · 10am–7pm<br>Sun · 11am–5pm" } }
+        "c1": {
+          "type": "info_card",
+          "settings": {
+            "icon": "mail",
+            "title": "Email us",
+            "body": "hello@pawsandco.com"
+          }
+        },
+        "c2": {
+          "type": "info_card",
+          "settings": {
+            "icon": "phone",
+            "title": "Call us",
+            "body": "(503) 555-PAWS"
+          }
+        },
+        "c3": {
+          "type": "info_card",
+          "settings": {
+            "icon": "map",
+            "title": "Visit our shop",
+            "body": "422 NW 23rd Ave<br>Portland, OR 97210"
+          }
+        },
+        "c4": {
+          "type": "info_card",
+          "settings": {
+            "icon": "clock",
+            "title": "Shop hours",
+            "body": "Mon–Sat · 10am–7pm<br>Sun · 11am–5pm"
+          }
+        }
       },
-      "block_order": ["c1", "c2", "c3", "c4"],
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ],
       "settings": {
         "form_heading": "Send us a message"
       }
@@ -34,18 +76,69 @@
     "faq": {
       "type": "paws-faq",
       "blocks": {
-        "q1": { "type": "faq", "settings": { "question": "How fast is shipping?", "answer": "Most orders ship within 24 hours. US delivery takes 2–5 business days. International: 7–14 days." } },
-        "q2": { "type": "faq", "settings": { "question": "What if my pet doesn't love it?", "answer": "We have a Happy Tails Guarantee — 30 days to return unopened items for a full refund. No drama." } },
-        "q3": { "type": "faq", "settings": { "question": "Are your products vet-approved?", "answer": "Yes — every recipe is reviewed by our in-house vet Dr. Priya and a rotating panel of independent vets." } },
-        "q4": { "type": "faq", "settings": { "question": "Do you ship internationally?", "answer": "We ship to Canada, UK, Australia, and the EU. More regions coming soon. Contact us for custom quotes." } },
-        "q5": { "type": "faq", "settings": { "question": "Can I modify my subscription?", "answer": "Of course! Skip, swap, pause, or cancel anytime from your account dashboard. No weird fees." } },
-        "q6": { "type": "faq", "settings": { "question": "Do you offer wholesale?", "answer": "We love partnering with local pet stores, groomers, and vets. Email wholesale@pawsandco.com to chat." } }
+        "q1": {
+          "type": "faq",
+          "settings": {
+            "question": "How fast is shipping?",
+            "answer": "Most orders ship within 24 hours. US delivery takes 2–5 business days. International: 7–14 days."
+          }
+        },
+        "q2": {
+          "type": "faq",
+          "settings": {
+            "question": "What if my pet doesn't love it?",
+            "answer": "We have a Happy Tails Guarantee — 30 days to return unopened items for a full refund. No drama."
+          }
+        },
+        "q3": {
+          "type": "faq",
+          "settings": {
+            "question": "Are your products vet-approved?",
+            "answer": "Yes — every recipe is reviewed by our in-house vet Dr. Priya and a rotating panel of independent vets."
+          }
+        },
+        "q4": {
+          "type": "faq",
+          "settings": {
+            "question": "Do you ship internationally?",
+            "answer": "We ship to Canada, UK, Australia, and the EU. More regions coming soon. Contact us for custom quotes."
+          }
+        },
+        "q5": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I modify my subscription?",
+            "answer": "Of course! Skip, swap, pause, or cancel anytime from your account dashboard. No weird fees."
+          }
+        },
+        "q6": {
+          "type": "faq",
+          "settings": {
+            "question": "Do you offer wholesale?",
+            "answer": "We love partnering with local pet stores, groomers, and vets. Email wholesale@pawsandco.com to chat."
+          }
+        }
       },
-      "block_order": ["q1", "q2", "q3", "q4", "q5", "q6"]
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5",
+        "q6"
+      ],
+      "settings": {}
     },
     "newsletter": {
-      "type": "paws-newsletter"
+      "type": "paws-newsletter",
+      "settings": {}
     }
   },
-  "order": ["page_header", "contact", "map", "faq", "newsletter"]
+  "order": [
+    "page_header",
+    "contact",
+    "map",
+    "faq",
+    "newsletter"
+  ]
 }

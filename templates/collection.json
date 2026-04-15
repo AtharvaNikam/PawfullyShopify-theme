@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "page_header": {
@@ -12,19 +21,57 @@
     "main": {
       "type": "paws-shop",
       "blocks": {
-        "pet1": { "type": "filter_pet", "settings": { "label": "Dogs", "value": "dogs", "count": "" } },
-        "pet2": { "type": "filter_pet", "settings": { "label": "Cats", "value": "cats", "count": "" } },
-        "pet3": { "type": "filter_pet", "settings": { "label": "Small Pets", "value": "small", "count": "" } },
-        "pet4": { "type": "filter_pet", "settings": { "label": "Birds & Fish", "value": "birds", "count": "" } }
+        "pet1": {
+          "type": "filter_pet",
+          "settings": {
+            "label": "Dogs",
+            "value": "dogs",
+            "count": ""
+          }
+        },
+        "pet2": {
+          "type": "filter_pet",
+          "settings": {
+            "label": "Cats",
+            "value": "cats",
+            "count": ""
+          }
+        },
+        "pet3": {
+          "type": "filter_pet",
+          "settings": {
+            "label": "Small Pets",
+            "value": "small",
+            "count": ""
+          }
+        },
+        "pet4": {
+          "type": "filter_pet",
+          "settings": {
+            "label": "Birds & Fish",
+            "value": "birds",
+            "count": ""
+          }
+        }
       },
-      "block_order": ["pet1", "pet2", "pet3", "pet4"],
+      "block_order": [
+        "pet1",
+        "pet2",
+        "pet3",
+        "pet4"
+      ],
       "settings": {
         "products_per_page": 12
       }
     },
     "newsletter": {
-      "type": "paws-newsletter"
+      "type": "paws-newsletter",
+      "settings": {}
     }
   },
-  "order": ["page_header", "main", "newsletter"]
+  "order": [
+    "page_header",
+    "main",
+    "newsletter"
+  ]
 }
