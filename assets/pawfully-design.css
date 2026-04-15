@@ -1636,9 +1636,55 @@ html[data-paws-reveal-ready] .paws-reveal-up.visible {
   font-size: 1.05rem;
   margin: 1.25rem 0 1.75rem;
   line-height: 1.65;
+  color: var(--paws-ink);
 }
-.paws-pdp-description p { margin-bottom: 0.75rem; }
+.paws-pdp-description p { margin: 0 0 0.75rem; }
 .paws-pdp-description p:last-child { margin-bottom: 0; }
+.paws-pdp-description ul,
+.paws-pdp-description ol {
+  margin: 0.75rem 0 0.75rem 1.25rem;
+  padding-left: 0.75rem;
+}
+.paws-pdp-description li { margin-bottom: 0.35rem; line-height: 1.55; }
+.paws-pdp-description strong { font-weight: 700; color: var(--paws-ink); }
+.paws-pdp-description em { font-style: italic; }
+.paws-pdp-description a {
+  color: var(--paws-coral);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.paws-pdp-description img {
+  max-width: 100%;
+  height: auto;
+  border: var(--paws-border);
+  border-radius: var(--paws-radius);
+  margin: 1rem 0;
+}
+.paws-pdp-description h1,
+.paws-pdp-description h2,
+.paws-pdp-description h3,
+.paws-pdp-description h4 {
+  font-family: var(--paws-font-head);
+  font-weight: 700;
+  margin: 1.25rem 0 0.5rem;
+  font-size: 1.1rem;
+}
+
+/* Accordion body .rte content — same treatment */
+.paws-acc-body .rte p { margin: 0 0 0.75rem; }
+.paws-acc-body .rte p:last-child { margin-bottom: 0; }
+.paws-acc-body .rte ul,
+.paws-acc-body .rte ol {
+  margin: 0.5rem 0 0.5rem 1.25rem;
+  padding-left: 0.5rem;
+}
+.paws-acc-body .rte li { margin-bottom: 0.3rem; }
+.paws-acc-body .rte strong { font-weight: 700; }
+.paws-acc-body .rte a {
+  color: var(--paws-coral);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
 
 /* ═══════════════════════════════════════════════════════════════
    HORIZON THEME OVERRIDES — Apply Paws & Co. to native classes

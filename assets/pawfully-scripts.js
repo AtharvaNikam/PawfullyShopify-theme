@@ -343,12 +343,76 @@ function initPdpGallery() {
 
 // ─── 9. PDP OPTION BUTTONS ───────────────────────────────────────────────────
 function initPdpOptions() {
-  document.querySelectorAll('.paws-opt-group').forEach((group) => {
-    const btns = group.querySelectorAll('.paws-opt');
-    btns.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        btns.forEach((b) => b.classList.remove('active'));
-        btn.classList.add('active');
+  document.querySelectorAll('.paws-pdp-form-wrap').forEach((wrap) => {
+    const variantDataEl = wrap.querySelector('[data-paws-variants]');
+    let variants = [];
+    try {
+      variants = JSON.parse(variantDataEl?.textContent || '[]');
+    } catch (_) {
+      variants = [];
+    }
+    const optGroups = wrap.querySelectorAll('.paws-opt-group');
+    const variantIdInput = wrap.querySelector('[data-paws-variant-id]');
+    const atcButton = wrap.querySelector('[data-paws-add-to-cart]');
+    const atcLabel = wrap.querySelector('[data-paws-atc-label]');
+
+    function getSelectedOptions() {
+      const values = [];
+      optGroups.forEach((group) => {
+        const active = group.querySelector('.paws-opt.active');
+        values.push(active?.dataset.optionValue || null);
+      });
+      return values;
+    }
+
+    function findVariant(selectedOptions) {
+      return variants.find((v) =>
+        selectedOptions.every((val, i) => v.options[i] === val)
+      );
+    }
+
+    function updateVariantState() {
+      const selected = getSelectedOptions();
+      const variant = findVariant(selected);
+      if (!variant) return;
+
+      if (variantIdInput) variantIdInput.value = variant.id;
+      if (atcButton) atcButton.disabled = !variant.available;
+      if (atcLabel) {
+        const formatPrice = (cents) => {
+          if (window.Shopify?.formatMoney) {
+            return window.Shopify.formatMoney(cents);
+          }
+          return '$' + (cents / 100).toFixed(2);
+        };
+        atcLabel.textContent = variant.available
+          ? `Add to cart · ${formatPrice(variant.price)}`
+          : 'Sold out';
+      }
+
+      // Update main gallery image if variant has featured_image
+      if (variant.featured_image?.src) {
+        const mainImg = wrap.closest('.paws-pdp-section')?.querySelector('.paws-gallery-main img');
+        if (mainImg) {
+          mainImg.style.opacity = '0';
+          setTimeout(() => {
+            mainImg.src = variant.featured_image.src;
+            mainImg.style.opacity = '1';
+          }, 150);
+        }
+      }
+    }
+
+    optGroups.forEach((group) => {
+      const btns = group.querySelectorAll('.paws-opt');
+      const selectedLabel = group.querySelector('[data-paws-selected-value]');
+      btns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          btns.forEach((b) => b.classList.remove('active'));
+          btn.classList.add('active');
+          if (selectedLabel) selectedLabel.textContent = btn.dataset.optionValue || '';
+          updateVariantState();
+        });
       });
     });
   });
@@ -362,10 +426,15 @@ function initPdpQty() {
     const display = wrap.querySelector('.paws-qty-display, [data-paws-qty-display]');
     if (!display) return;
 
+    // Hidden input sits outside the wrap, at form level
+    const form = wrap.closest('form') || wrap.closest('.paws-pdp-form-wrap');
+    const hiddenInput = form?.querySelector('[data-paws-qty-input]');
+
     let qty = parseInt(display.textContent, 10) || 1;
 
     function update() {
       display.textContent = qty;
+      if (hiddenInput) hiddenInput.value = qty;
       if (minus) minus.disabled = qty <= 1;
     }
 

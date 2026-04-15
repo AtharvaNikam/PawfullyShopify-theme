@@ -6,17 +6,15 @@
         "perk1": { "type": "perk", "settings": { "icon": "truck", "text": "Free shipping over $50" } },
         "perk2": { "type": "perk", "settings": { "icon": "check", "text": "30-day money back" } },
         "perk3": { "type": "perk", "settings": { "icon": "clock", "text": "Ships in 24 hrs" } },
-        "perk4": { "type": "perk", "settings": { "icon": "heart", "text": "Cruelty-free, always" } },
-        "acc1": { "type": "accordion", "settings": { "heading": "Ingredients", "open_by_default": true, "body": "<p>Wild-caught Alaskan salmon (86%), sweet potato, chickpea flour, flaxseed, turmeric, mixed tocopherols (natural preservative). No grains, no fillers, no artificial anything.</p>" } },
-        "acc2": { "type": "accordion", "settings": { "heading": "Feeding guidelines", "body": "<p>Small dogs: 3–5 pieces/day. Medium: 5–8. Large: 8–12. As a treat, not a meal replacement. Always provide fresh water.</p>" } },
-        "acc3": { "type": "accordion", "settings": { "heading": "Shipping & returns", "body": "<p>Free US shipping on $50+. Ships within 24 hours. Not tail-wagging? Return unopened within 30 days for a full refund.</p>" } },
-        "acc4": { "type": "accordion", "settings": { "heading": "FAQ", "body": "<p><strong>Q: Good for training?</strong> Yes! Small enough for rapid-fire rewards. <strong>Q: Allergies?</strong> Single protein, grain-free, hypoallergenic.</p>" } },
-        "rev1": { "type": "review", "settings": { "name": "Maya K.", "meta": "Verified buyer · 2 weeks ago", "stars": 5, "title": "Biscuit is OBSESSED", "body": "My beagle loses his mind the second he hears the bag crinkle. Used them for recall training and suddenly he has impeccable manners. A miracle." } },
-        "rev2": { "type": "review", "settings": { "name": "Dev R.", "meta": "Verified buyer · 1 month ago", "stars": 5, "title": "The only treat that survived our picky pup", "body": "We've tried a dozen premium treats and gotten bored side-eyes. These? Actual zoomies. The sweet potato makes them easy on her tummy too." } },
-        "rev3": { "type": "review", "settings": { "name": "Priya S.", "meta": "Verified buyer · 1 month ago", "stars": 4, "title": "Great treats, wish the bag was bigger", "body": "Quality is top-notch and Coco clearly loves them. My only complaint is they disappear too fast. Bring on the 2lb jar!" } },
-        "rev4": { "type": "review", "settings": { "name": "Arjun P.", "meta": "Verified buyer · 2 months ago", "stars": 5, "title": "Smell-test passed by all three dogs", "body": "Three dogs, three different personalities, unanimous approval. Even my suspicious senior sniffed and immediately demanded more. Subscribed." } }
+        "perk4": { "type": "perk", "settings": { "icon": "heart", "text": "Cruelty-free, always" } }
       },
-      "block_order": ["perk1", "perk2", "perk3", "perk4", "acc1", "acc2", "acc3", "acc4", "rev1", "rev2", "rev3", "rev4"]
+      "block_order": ["perk1", "perk2", "perk3", "perk4"],
+      "settings": {
+        "default_rating": "4.9",
+        "show_default_rating": true,
+        "show_reviews_placeholder": true,
+        "default_shipping_info": "<p>Free US shipping on $50+. Ships within 24 hours. Return unopened within 30 days for a full refund.</p>"
+      }
     },
     "related": {
       "type": "paws-related-products",
@@ -28,13 +26,7 @@
       }
     },
     "newsletter": {
-      "type": "paws-newsletter",
-      "settings": {
-        "eyebrow_icon": "💌",
-        "eyebrow": "join the pack",
-        "heading": "Get 20% off your first order",
-        "subtext": "Plus sneak peeks, new drops, and tail-wagging tips."
-      }
+      "type": "paws-newsletter"
     }
   },
   "order": ["main", "related", "newsletter"]
