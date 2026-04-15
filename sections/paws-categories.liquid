@@ -1,0 +1,73 @@
+{% comment %} Paws & Co. Categories — 4 colored category cards {% endcomment %}
+<section class="paws-categories">
+  <div class="paws-wrap">
+    <div class="paws-section-head paws-reveal-up">
+      <div>
+        {% if section.settings.eyebrow != blank %}
+          <span class="paws-eyebrow"><span>{{ section.settings.eyebrow_icon }}</span> {{ section.settings.eyebrow }}</span>
+        {% endif %}
+        <h2>{{ section.settings.heading }}</h2>
+      </div>
+      {% if section.settings.link_label != blank %}
+        <a href="{{ section.settings.link_url | default: '/collections/all' }}" class="paws-btn paws-btn--ink paws-btn--sm">{{ section.settings.link_label }} →</a>
+      {% endif %}
+    </div>
+
+    <div class="paws-category-grid">
+      {% for block in section.blocks %}
+        <a href="{{ block.settings.link | default: '/collections/all' }}" class="paws-cat-card paws-reveal-up{% if forloop.index0 > 0 %} delay-{{ forloop.index0 }}{% endif %}" {{ block.shopify_attributes }}>
+          <div class="paws-cat-icon">
+            {% if block.settings.image != blank %}
+              {{ block.settings.image | image_url: width: 300 | image_tag: loading: 'lazy', alt: block.settings.title }}
+            {% endif %}
+          </div>
+          <h3>{{ block.settings.title }}</h3>
+          <p>{{ block.settings.subtext }}</p>
+          {% if block.settings.count != blank %}
+            <span class="paws-count">{{ block.settings.count }}</span>
+          {% endif %}
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Paws Categories",
+  "tag": "section",
+  "class": "paws-section-categories",
+  "settings": [
+    { "type": "text", "id": "eyebrow_icon", "label": "Eyebrow emoji", "default": "🐾" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow label", "default": "shop by pet" },
+    { "type": "richtext", "id": "heading", "label": "Heading", "default": "<p>What's your<br>best friend?</p>" },
+    { "type": "text", "id": "link_label", "label": "Link label", "default": "View all" },
+    { "type": "url", "id": "link_url", "label": "Link URL" }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "limit": 6,
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "For Dogs" },
+        { "type": "text", "id": "subtext", "label": "Subtext", "default": "Good boys deserve the best" },
+        { "type": "image_picker", "id": "image", "label": "Category image" },
+        { "type": "text", "id": "count", "label": "Count text", "default": "124 items" },
+        { "type": "url", "id": "link", "label": "Link URL" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Paws Categories",
+      "blocks": [
+        { "type": "category", "settings": { "title": "For Dogs", "subtext": "Good boys deserve the best", "count": "124 items" } },
+        { "type": "category", "settings": { "title": "For Cats", "subtext": "Royalty-grade essentials", "count": "86 items" } },
+        { "type": "category", "settings": { "title": "Small Pets", "subtext": "Tiny friends, big love", "count": "38 items" } },
+        { "type": "category", "settings": { "title": "Grooming", "subtext": "Looking sharp, smelling fresh", "count": "44 items" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

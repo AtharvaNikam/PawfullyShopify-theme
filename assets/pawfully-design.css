@@ -1555,6 +1555,72 @@ body {
   .paws-pdp-perks        { grid-template-columns: 1fr; }
 }
 
+/* ── Missing Utilities (shop-main, qty wrap, accordion list, map frame, breadcrumb strip, pdp description) ── */
+.paws-shop-main {
+  min-width: 0; /* allow grid children to shrink */
+}
+
+.paws-qty-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--paws-white);
+  border: var(--paws-border);
+  border-radius: 999px;
+  padding: 0.3rem;
+  box-shadow: var(--paws-shadow-sm);
+}
+.paws-qty-wrap button {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  font-weight: 800; border: none; background: none; cursor: pointer;
+  transition: background 0.15s ease;
+}
+.paws-qty-wrap button:hover { background: var(--paws-yellow); }
+.paws-qty-display, [data-paws-qty-display] {
+  padding: 0 0.9rem;
+  font-family: var(--paws-font-head);
+  font-weight: 700;
+  min-width: 2ch;
+  text-align: center;
+}
+
+.paws-acc-list { display: block; }
+.paws-acc-trigger {
+  width: 100%; padding: 1.25rem 0;
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: var(--paws-font-head); font-weight: 700; font-size: 1rem;
+  text-align: left; background: none; border: none; cursor: pointer;
+}
+
+.paws-opt-group { margin-bottom: 1.5rem; }
+
+.paws-map-frame {
+  aspect-ratio: 16 / 8;
+  background: var(--paws-white);
+  border: var(--paws-border-thick);
+  border-radius: var(--paws-radius-lg);
+  box-shadow: var(--paws-shadow-lg);
+  overflow: hidden;
+  margin-top: 2rem;
+}
+.paws-map-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+.paws-breadcrumb-strip {
+  background: var(--paws-cream);
+  padding: 1.25rem 0;
+  border-bottom: 2px dashed var(--paws-ink);
+}
+
+.paws-pdp-description {
+  font-size: 1.05rem;
+  margin: 1.25rem 0 1.75rem;
+  line-height: 1.65;
+}
+.paws-pdp-description p { margin-bottom: 0.75rem; }
+.paws-pdp-description p:last-child { margin-bottom: 0; }
+
 /* ═══════════════════════════════════════════════════════════════
    HORIZON THEME OVERRIDES — Apply Paws & Co. to native classes
    ═══════════════════════════════════════════════════════════════ */

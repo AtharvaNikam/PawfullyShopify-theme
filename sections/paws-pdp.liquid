@@ -1,0 +1,302 @@
+{% comment %} Paws & Co. PDP — sticky gallery + product info + accordion {% endcomment %}
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+{%- assign discount_percent = 0 -%}
+{%- if current_variant.compare_at_price > current_variant.price -%}
+  {%- assign discount_percent = current_variant.compare_at_price | minus: current_variant.price | times: 100.0 | divided_by: current_variant.compare_at_price | round -%}
+{%- endif -%}
+
+{% comment %} Breadcrumb strip {% endcomment %}
+<div class="paws-breadcrumb-strip">
+  <div class="paws-wrap">
+    <div class="paws-breadcrumb">
+      <a href="{{ routes.root_url }}">Home</a>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="m9 18 6-6-6-6"/></svg>
+      <a href="/collections/all">Shop</a>
+      {% if product.collections.first %}
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="m9 18 6-6-6-6"/></svg>
+        <a href="{{ product.collections.first.url }}">{{ product.collections.first.title }}</a>
+      {% endif %}
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="m9 18 6-6-6-6"/></svg>
+      <span>{{ product.title }}</span>
+    </div>
+  </div>
+</div>
+
+<section class="paws-pdp-section" style="padding-top: 3rem;">
+  <div class="paws-wrap">
+    <div class="paws-pdp-layout">
+      {% comment %} Gallery {% endcomment %}
+      <div class="paws-pdp-gallery">
+        <div class="paws-gallery-main">
+          {% if product.tags contains 'bestseller' %}
+            <span class="paws-gallery-pill">Bestseller</span>
+          {% elsif product.tags contains 'new' %}
+            <span class="paws-gallery-pill">New</span>
+          {% elsif discount_percent > 0 %}
+            <span class="paws-gallery-pill">-{{ discount_percent }}%</span>
+          {% endif %}
+          {% if product.featured_image %}
+            <img
+              id="pawsGalleryMain-{{ section.id }}"
+              src="{{ product.featured_image | image_url: width: 1200 }}"
+              alt="{{ product.title }}"
+            >
+          {% endif %}
+        </div>
+        {% if product.media.size > 1 %}
+          <div class="paws-gallery-thumbs">
+            {% for media in product.media limit: 8 %}
+              <button class="paws-thumb{% if forloop.first %} active{% endif %}" type="button" data-src="{{ media | image_url: width: 1200 }}">
+                {{ media | image_url: width: 300 | image_tag: loading: 'lazy', alt: product.title }}
+              </button>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+      {% comment %} Info column {% endcomment %}
+      <div class="paws-pdp-info">
+        <div class="paws-product-meta" style="margin-bottom: 0.5rem;">
+          {{ product.type }}{% if product.vendor != blank %} · {{ product.vendor }}{% endif %}
+        </div>
+        <h1>{{ product.title }}</h1>
+
+        <div class="paws-pdp-rating">
+          <span class="stars">★★★★★</span>
+          <strong>{{ product.metafields.reviews.rating.value | default: '4.9' }}</strong>
+          <span>·</span>
+          <a href="#paws-reviews">{{ product.metafields.reviews.count.value | default: '100' }} reviews</a>
+        </div>
+
+        <div class="paws-pdp-price">
+          {% if current_variant.compare_at_price > current_variant.price %}
+            <del>{{ current_variant.compare_at_price | money }}</del>
+          {% endif %}
+          {{ current_variant.price | money }}
+          {% if discount_percent > 0 %}
+            <span class="paws-pdp-save">Save {{ discount_percent }}%</span>
+          {% endif %}
+        </div>
+
+        {% if product.description != blank %}
+          <div class="paws-pdp-description">{{ product.description }}</div>
+        {% endif %}
+
+        {% comment %} Variant options {% endcomment %}
+        {% unless product.has_only_default_variant %}
+          <form method="post" action="{{ routes.cart_add_url }}" accept-charset="UTF-8" class="paws-pdp-form" enctype="multipart/form-data">
+            {% for option in product.options_with_values %}
+              <div class="paws-option-group paws-opt-group">
+                <label>{{ option.name }}: <strong data-paws-selected-value>{{ option.selected_value }}</strong></label>
+                <div class="paws-option-buttons">
+                  {% for value in option.values %}
+                    <button
+                      type="button"
+                      class="paws-opt{% if value == option.selected_value %} active{% endif %}"
+                      data-option-index="{{ option.position | minus: 1 }}"
+                      data-option-value="{{ value | escape }}"
+                    >{{ value }}</button>
+                  {% endfor %}
+                </div>
+              </div>
+            {% endfor %}
+
+            <input
+              type="hidden"
+              name="id"
+              value="{{ current_variant.id }}"
+              data-paws-variant-id
+            >
+
+            <div class="paws-pdp-actions">
+              <div class="paws-pdp-qty paws-qty-wrap">
+                <button type="button" data-paws-qty-minus aria-label="Decrease">−</button>
+                <span data-paws-qty-display class="paws-qty-display">1</span>
+                <button type="button" data-paws-qty-plus aria-label="Increase">+</button>
+              </div>
+              <input type="hidden" name="quantity" value="1" data-paws-qty-input>
+              <button
+                type="submit"
+                class="paws-btn paws-btn--coral paws-btn--lg"
+                data-paws-add-to-cart
+                {% unless current_variant.available %}disabled{% endunless %}
+              >
+                {% if current_variant.available %}
+                  Add to cart · {{ current_variant.price | money }}
+                {% else %}
+                  Sold out
+                {% endif %}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/></svg>
+              </button>
+            </div>
+          </form>
+        {% else %}
+          <form method="post" action="{{ routes.cart_add_url }}" accept-charset="UTF-8" class="paws-pdp-form">
+            <input type="hidden" name="id" value="{{ current_variant.id }}">
+            <div class="paws-pdp-actions">
+              <div class="paws-pdp-qty paws-qty-wrap">
+                <button type="button" data-paws-qty-minus>−</button>
+                <span data-paws-qty-display class="paws-qty-display">1</span>
+                <button type="button" data-paws-qty-plus>+</button>
+              </div>
+              <input type="hidden" name="quantity" value="1" data-paws-qty-input>
+              <button type="submit" class="paws-btn paws-btn--coral paws-btn--lg" data-paws-add-to-cart>
+                Add to cart · {{ current_variant.price | money }}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/></svg>
+              </button>
+            </div>
+          </form>
+        {% endunless %}
+
+        {% comment %} Perks strip {% endcomment %}
+        <div class="paws-pdp-perks">
+          {% for block in section.blocks %}
+            {% if block.type == 'perk' %}
+              <div class="paws-perk" {{ block.shopify_attributes }}>
+                {% case block.settings.icon %}
+                  {% when 'truck' %}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><rect x="2" y="7" width="20" height="10" rx="2"/><path d="M6 7V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2"/></svg>
+                  {% when 'check' %}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                  {% when 'clock' %}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                  {% when 'heart' %}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                {% endcase %}
+                <span>{{ block.settings.text }}</span>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        {% comment %} Accordion {% endcomment %}
+        <div class="paws-pdp-accordion paws-acc-list">
+          {% for block in section.blocks %}
+            {% if block.type == 'accordion' %}
+              <div class="paws-acc-item{% if block.settings.open_by_default %} open{% endif %}" {{ block.shopify_attributes }}>
+                <button class="paws-acc-header paws-acc-trigger" type="button" aria-expanded="{% if block.settings.open_by_default %}true{% else %}false{% endif %}">
+                  {{ block.settings.heading }}
+                  <span class="paws-acc-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                  </span>
+                </button>
+                <div class="paws-acc-body">
+                  <div>{{ block.settings.body }}</div>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% comment %} Reviews {% endcomment %}
+<section class="paws-reviews-section" id="paws-reviews">
+  <div class="paws-wrap">
+    <div class="paws-section-head paws-reveal-up">
+      <div>
+        <span class="paws-eyebrow"><span>⭐</span> tail-wagging reviews</span>
+        <h2>What the pack is saying</h2>
+      </div>
+      <button class="paws-btn paws-btn--coral" type="button">Write a review</button>
+    </div>
+
+    <div class="paws-reviews-grid">
+      <div class="paws-review-summary">
+        <div class="paws-big-rating">{{ product.metafields.reviews.rating.value | default: '4.9' }}</div>
+        <div class="stars">★★★★★</div>
+        <div class="paws-review-count">Based on {{ product.metafields.reviews.count.value | default: '312' }} reviews</div>
+        <div class="paws-review-bars">
+          <div class="paws-review-bar-row"><span>5★</span><div class="paws-review-bar-track"><div class="paws-review-bar-fill" style="width: 86%"></div></div><span>86%</span></div>
+          <div class="paws-review-bar-row"><span>4★</span><div class="paws-review-bar-track"><div class="paws-review-bar-fill" style="width: 10%"></div></div><span>10%</span></div>
+          <div class="paws-review-bar-row"><span>3★</span><div class="paws-review-bar-track"><div class="paws-review-bar-fill" style="width: 3%"></div></div><span>3%</span></div>
+          <div class="paws-review-bar-row"><span>2★</span><div class="paws-review-bar-track"><div class="paws-review-bar-fill" style="width: 1%"></div></div><span>1%</span></div>
+          <div class="paws-review-bar-row"><span>1★</span><div class="paws-review-bar-track"><div class="paws-review-bar-fill" style="width: 0%"></div></div><span>0%</span></div>
+        </div>
+      </div>
+
+      <div class="paws-review-list">
+        {% for block in section.blocks %}
+          {% if block.type == 'review' %}
+            <div class="paws-review" {{ block.shopify_attributes }}>
+              <div class="paws-review-head">
+                <div class="paws-reviewer">
+                  {% if block.settings.avatar != blank %}
+                    {{ block.settings.avatar | image_url: width: 100 | image_tag: alt: block.settings.name }}
+                  {% else %}
+                    <img src="https://i.pravatar.cc/100?img={{ forloop.index | plus: 12 }}" alt="{{ block.settings.name }}">
+                  {% endif %}
+                  <div><strong>{{ block.settings.name }}</strong><span>{{ block.settings.meta }}</span></div>
+                </div>
+                <span class="stars">{% if block.settings.stars == 4 %}★★★★☆{% else %}★★★★★{% endif %}</span>
+              </div>
+              <h4>{{ block.settings.title }}</h4>
+              <p>{{ block.settings.body }}</p>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Paws PDP",
+  "tag": "section",
+  "class": "paws-section-pdp",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "perk",
+      "name": "Perk",
+      "limit": 6,
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "options": [
+          { "value": "truck", "label": "Truck" },
+          { "value": "check", "label": "Check" },
+          { "value": "clock", "label": "Clock" },
+          { "value": "heart", "label": "Heart" }
+        ], "default": "truck" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Free shipping over $50" }
+      ]
+    },
+    {
+      "type": "accordion",
+      "name": "Accordion row",
+      "limit": 10,
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Ingredients" },
+        { "type": "richtext", "id": "body", "label": "Body", "default": "<p>Description goes here.</p>" },
+        { "type": "checkbox", "id": "open_by_default", "label": "Open by default", "default": false }
+      ]
+    },
+    {
+      "type": "review",
+      "name": "Sample review",
+      "limit": 20,
+      "settings": [
+        { "type": "text", "id": "name", "label": "Reviewer name", "default": "Maya K." },
+        { "type": "text", "id": "meta", "label": "Meta (verified/date)", "default": "Verified buyer · 2 weeks ago" },
+        { "type": "range", "id": "stars", "label": "Stars", "min": 1, "max": 5, "step": 1, "default": 5 },
+        { "type": "image_picker", "id": "avatar", "label": "Avatar" },
+        { "type": "text", "id": "title", "label": "Review title", "default": "Biscuit is OBSESSED" },
+        { "type": "textarea", "id": "body", "label": "Review body", "default": "My beagle loses his mind the second he hears the bag crinkle." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Paws PDP",
+      "blocks": [
+        { "type": "perk", "settings": { "icon": "truck", "text": "Free shipping over $50" } },
+        { "type": "perk", "settings": { "icon": "check", "text": "30-day money back" } },
+        { "type": "perk", "settings": { "icon": "clock", "text": "Ships in 24 hrs" } },
+        { "type": "perk", "settings": { "icon": "heart", "text": "Cruelty-free, always" } },
+        { "type": "accordion", "settings": { "heading": "Ingredients", "open_by_default": true, "body": "<p>Wild-caught Alaskan salmon (86%), sweet potato, chickpea flour, flaxseed, turmeric.</p>" } },
+        { "type": "accordion", "settings": { "heading": "Feeding guidelines", "body": "<p>Small dogs: 3–5 pieces/day. Medium: 5–8. Large: 8–12.</p>" } },
+        { "type": "accordion", "settings": { "heading": "Shipping & returns", "body": "<p>Free US shipping on $50+. Ships within 24 hours. Return unopened within 30 days.</p>" } },
+        { "type": "accordion", "settings": { "heading": "FAQ", "body": "<p><strong>Q: Good for training?</strong> Yes! Small enough for rapid-fire rewards.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

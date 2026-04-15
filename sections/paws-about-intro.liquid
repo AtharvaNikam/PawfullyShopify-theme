@@ -1,0 +1,41 @@
+{% comment %} Paws & Co. About Intro — 2-col text + visual with sticker {% endcomment %}
+<section class="paws-about-intro">
+  <div class="paws-wrap">
+    <div class="paws-about-grid">
+      <div class="paws-about-text paws-reveal-up">
+        {% if section.settings.eyebrow != blank %}
+          <span class="paws-eyebrow"><span>{{ section.settings.eyebrow_icon }}</span> {{ section.settings.eyebrow }}</span>
+        {% endif %}
+        <h2>{{ section.settings.heading }}</h2>
+        <div>{{ section.settings.body }}</div>
+      </div>
+      <div class="paws-about-visual paws-reveal-up delay-2">
+        {% if section.settings.image != blank %}
+          {{ section.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', alt: 'About' }}
+        {% endif %}
+        {% if section.settings.sticker_text != blank %}
+          <div class="paws-about-sticker">{{ section.settings.sticker_text }}</div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Paws About Intro",
+  "tag": "section",
+  "class": "paws-section-about-intro",
+  "settings": [
+    { "type": "text", "id": "eyebrow_icon", "label": "Eyebrow emoji", "default": "🌱" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow label", "default": "our story" },
+    { "type": "richtext", "id": "heading", "label": "Heading", "default": "<p>It started with a<br>stubborn beagle.</p>" },
+    { "type": "richtext", "id": "body", "label": "Body text", "default": "<p>In 2014, our founder's beagle Biscuit refused every treat on the shelf. Faced with a very judgemental 14kg critic, she got to work in her kitchen.</p>" },
+    { "type": "image_picker", "id": "image", "label": "Visual image" },
+    { "type": "text", "id": "sticker_text", "label": "Sticker text", "default": "Woof yeah!" }
+  ],
+  "presets": [
+    { "name": "Paws About Intro" }
+  ]
+}
+{% endschema %}

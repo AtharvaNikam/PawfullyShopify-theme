@@ -1,0 +1,84 @@
+{% comment %} Paws & Co. Testimonials Carousel {% endcomment %}
+<section class="paws-testimonials">
+  <div class="paws-wrap">
+    <div class="paws-section-head paws-reveal-up">
+      <div>
+        {% if section.settings.eyebrow != blank %}
+          <span class="paws-eyebrow"><span>{{ section.settings.eyebrow_icon }}</span> {{ section.settings.eyebrow }}</span>
+        {% endif %}
+        <h2>{{ section.settings.heading }}</h2>
+      </div>
+    </div>
+
+    <div class="paws-testimonial-track">
+      {% for block in section.blocks %}
+        <div class="paws-testimonial paws-testimonial--{{ block.settings.bg_color }}" {{ block.shopify_attributes }}>
+          <div class="paws-quote-mark">"</div>
+          <p>{{ block.settings.quote }}</p>
+          <div class="paws-testimonial-author">
+            {% if block.settings.avatar != blank %}
+              {{ block.settings.avatar | image_url: width: 100 | image_tag: loading: 'lazy', alt: block.settings.name }}
+            {% else %}
+              <img src="https://i.pravatar.cc/100?img={{ forloop.index | plus: 10 }}" alt="{{ block.settings.name }}" loading="lazy">
+            {% endif %}
+            <div class="paws-author-info">
+              <strong>{{ block.settings.name }}</strong>
+              <span>{{ block.settings.role }}</span>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    {% if section.blocks.size > 1 %}
+      <div class="paws-t-controls">
+        <button class="paws-t-prev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="m15 18-6-6 6-6"/></svg></button>
+        <button class="paws-t-next" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="m9 18 6-6-6-6"/></svg></button>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Paws Testimonials",
+  "tag": "section",
+  "class": "paws-section-testimonials",
+  "settings": [
+    { "type": "text", "id": "eyebrow_icon", "label": "Eyebrow emoji", "default": "💬" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow label", "default": "pack reviews" },
+    { "type": "richtext", "id": "heading", "label": "Heading", "default": "<p>What the pack<br>is barking about</p>" }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "limit": 12,
+      "settings": [
+        { "type": "select", "id": "bg_color", "label": "Card background", "options": [
+          { "value": "white", "label": "White" },
+          { "value": "yellow", "label": "Yellow" },
+          { "value": "mint", "label": "Mint" },
+          { "value": "pink", "label": "Pink" },
+          { "value": "sky", "label": "Sky" }
+        ], "default": "white" },
+        { "type": "textarea", "id": "quote", "label": "Quote", "default": "My beagle Biscuit lost his mind over the Salmon Crunchies. Like, actual full-body zoomies. 10/10 would spoil again." },
+        { "type": "text", "id": "name", "label": "Name", "default": "Maya K." },
+        { "type": "text", "id": "role", "label": "Role / description", "default": "Biscuit's human" },
+        { "type": "image_picker", "id": "avatar", "label": "Avatar" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Paws Testimonials",
+      "blocks": [
+        { "type": "testimonial", "settings": { "bg_color": "white", "name": "Maya K.", "role": "Biscuit's human", "quote": "My beagle Biscuit lost his mind over the Salmon Crunchies. Like, actual full-body zoomies. 10/10 would spoil again." } },
+        { "type": "testimonial", "settings": { "bg_color": "mint", "name": "Dev R.", "role": "Staff to Princess Whiskers", "quote": "Finally a bed that my picky cat actually uses. She's reclaimed her throne and is back to judging us from above." } },
+        { "type": "testimonial", "settings": { "bg_color": "yellow", "name": "Priya S.", "role": "Coco's person", "quote": "The monthly box is genuinely the highlight of my dog's week. She knows the delivery guy by name now." } },
+        { "type": "testimonial", "settings": { "bg_color": "pink", "name": "Arjun P.", "role": "Dog parent of 3", "quote": "Packaging is so cute I keep the boxes. Also the shampoo smells like a hug. Basically perfect." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

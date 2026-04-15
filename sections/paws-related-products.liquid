@@ -1,0 +1,65 @@
+{% comment %} Paws & Co. Related Products — uses Shopify recommendations {% endcomment %}
+<section class="paws-related">
+  <div class="paws-wrap">
+    <div class="paws-section-head paws-reveal-up">
+      <div>
+        {% if section.settings.eyebrow != blank %}
+          <span class="paws-eyebrow"><span>{{ section.settings.eyebrow_icon }}</span> {{ section.settings.eyebrow }}</span>
+        {% endif %}
+        <h2>{{ section.settings.heading }}</h2>
+      </div>
+    </div>
+
+    <div class="paws-product-grid" data-product-recommendations>
+      {% if recommendations.performed? and recommendations.products_count > 0 %}
+        {% for product in recommendations.products limit: section.settings.product_count %}
+          <a href="{{ product.url }}" class="paws-product paws-reveal-up">
+            <div class="paws-product-image">
+              {% if product.compare_at_price > product.price %}
+                {%- assign discount = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round -%}
+                <span class="paws-product-badge sale">-{{ discount }}%</span>
+              {% endif %}
+              <button class="paws-wishlist" type="button" data-product-id="{{ product.id }}">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              </button>
+              {% if product.featured_image %}
+                {{ product.featured_image | image_url: width: 700 | image_tag: loading: 'lazy', alt: product.title }}
+              {% endif %}
+            </div>
+            <div class="paws-product-info">
+              <div class="paws-product-meta">{{ product.type }}</div>
+              <h3>{{ product.title }}</h3>
+              <div class="paws-product-rating"><span class="stars">★★★★★</span><span>{{ product.metafields.reviews.rating.value | default: '4.8' }}</span></div>
+              <div class="paws-product-footer">
+                <span class="paws-price">
+                  {% if product.compare_at_price > product.price %}<del>{{ product.compare_at_price | money }}</del>{% endif %}
+                  {{ product.price | money }}
+                </span>
+                <button class="paws-quick-add" type="button" data-variant-id="{{ product.selected_or_first_available_variant.id }}">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" width="18" height="18"><path d="M12 5v14M5 12h14"/></svg>
+                </button>
+              </div>
+            </div>
+          </a>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Paws Related Products",
+  "tag": "section",
+  "class": "paws-section-related",
+  "settings": [
+    { "type": "text", "id": "eyebrow_icon", "label": "Eyebrow emoji", "default": "🐾" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow label", "default": "you might also like" },
+    { "type": "richtext", "id": "heading", "label": "Heading", "default": "<p>Crowd favorites</p>" },
+    { "type": "range", "id": "product_count", "label": "Products to show", "min": 2, "max": 8, "step": 1, "default": 4 }
+  ],
+  "presets": [
+    { "name": "Paws Related Products" }
+  ]
+}
+{% endschema %}

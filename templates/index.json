@@ -1,1 +1,154 @@
-{"sections":{"hero_jVaWmY":{"type":"hero","blocks":{"text_YLPk4p":{"type":"text","name":"t:names.heading","settings":{"text":"<p>Browse our latest products<\/p>","width":"fit-content","max_width":"normal","alignment":"left","type_preset":"h2","font":"var(--font-body--family)","font_size":"1rem","line_height":"normal","letter_spacing":"normal","case":"none","wrap":"pretty","color":"var(--color-foreground-heading)","background":false,"background_color":"#00000026","corner_radius":0,"padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{}},"button_H9gpTf":{"type":"button","name":"t:names.button","settings":{"label":"Shop all","link":"shopify:\/\/collections\/all","open_in_new_tab":false,"style_class":"button-secondary","width":"fit-content","custom_width":100,"width_mobile":"fit-content","custom_width_mobile":100},"blocks":{}}},"block_order":["text_YLPk4p","button_H9gpTf"],"name":"t:names.hero","settings":{"media_type_1":"image","media_type_2":"image","open_in_new_tab":false,"content_direction":"column","vertical_on_mobile":true,"horizontal_alignment":"space-between","vertical_alignment":"flex-end","align_baseline":true,"horizontal_alignment_flex_direction_column":"center","vertical_alignment_flex_direction_column":"flex-end","gap":24,"section_width":"page-width","section_height":"medium","section_height_custom":50,"color_scheme":"scheme-6","toggle_overlay":true,"overlay_color":"#12121266","overlay_style":"solid","gradient_direction":"to bottom","blurred_reflection":false,"reflection_opacity":75,"padding-block-start":100,"padding-block-end":72}},"product_list_fa6P9H":{"type":"product-list","blocks":{"static-header":{"type":"_product-list-content","name":"t:names.header","static":true,"settings":{"content_direction":"row","vertical_on_mobile":false,"horizontal_alignment":"space-between","vertical_alignment":"flex-end","align_baseline":true,"horizontal_alignment_flex_direction_column":"flex-start","vertical_alignment_flex_direction_column":"center","gap":12,"width":"fill","custom_width":100,"width_mobile":"fill","custom_width_mobile":100,"height":"fit","custom_height":100,"inherit_color_scheme":true,"color_scheme":"","background_media":"none","video_position":"cover","background_image_position":"cover","border":"none","border_width":1,"border_opacity":100,"border_radius":0,"padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{"product_list_text_YFtzcL":{"type":"_product-list-text","name":"t:names.collection_title","settings":{"text":"<h3>{{ closest.collection.title }}<\/h3>","width":"fit-content","max_width":"normal","alignment":"left","type_preset":"h4","font":"var(--font-body--family)","font_size":"","line_height":"normal","letter_spacing":"normal","case":"none","wrap":"pretty","color":"var(--color-foreground)","background":false,"background_color":"#00000026","corner_radius":0,"padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{}},"product_list_button_MWeP9V":{"type":"_product-list-button","name":"t:names.product_list_button","settings":{"label":"View all","open_in_new_tab":false,"style_class":"link","width":"fit-content","custom_width":100,"width_mobile":"fit-content","custom_width_mobile":100},"blocks":{}}},"block_order":["product_list_text_YFtzcL","product_list_button_MWeP9V"]},"static-product-card":{"type":"_product-card","name":"t:names.product_card","static":true,"settings":{"product_card_gap":4,"inherit_color_scheme":true,"color_scheme":"","border":"none","border_width":1,"border_opacity":100,"border_radius":0,"padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{"product_card_gallery_677WP3":{"type":"_product-card-gallery","name":"t:names.product_card_media","settings":{"image_ratio":"adapt","border":"none","border_width":1,"border_opacity":100,"border_radius":0,"padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{}},"product_title_YXxMTj":{"type":"product-title","name":"t:names.product_title","settings":{"width":"100%","max_width":"normal","alignment":"left","type_preset":"rte","font":"var(--font-body--family)","font_size":"1rem","line_height":"normal","letter_spacing":"normal","case":"none","wrap":"pretty","color":"var(--color-foreground)","background":false,"background_color":"#00000026","corner_radius":0,"padding-block-start":4,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{}},"price_JQzVV4":{"type":"price","name":"t:names.product_price","settings":{"show_sale_price_first":true,"show_installments":false,"show_tax_info":false,"type_preset":"h6","width":"100%","alignment":"left","font":"var(--font-body--family)","font_size":"1rem","line_height":"normal","letter_spacing":"normal","case":"none","color":"var(--color-foreground)","padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{}}},"block_order":["product_card_gallery_677WP3","product_title_YXxMTj","price_JQzVV4"]}},"name":"Featured collection","settings":{"collection":"all","layout_type":"grid","carousel_on_mobile":false,"max_products":8,"columns":4,"mobile_columns":"2","mobile_card_size":"60cqw","columns_gap":8,"rows_gap":24,"icons_style":"arrow","icons_shape":"none","section_width":"page-width","horizontal_alignment":"flex-start","gap":28,"color_scheme":"scheme-1","padding-block-start":48,"padding-block-end":48}}},"order":["hero_jVaWmY","product_list_fa6P9H"]}
+{
+  "sections": {
+    "hero": {
+      "type": "paws-hero",
+      "blocks": {
+        "slide_1": {
+          "type": "slide",
+          "settings": {
+            "bg_color": "yellow",
+            "tag": "New arrivals · Spring '26",
+            "heading": "<p>Spoil your<br><em>good boy</em> silly.</p>",
+            "subtext": "Small-batch treats, snuggly beds, and toys so fun they'll wag themselves into a tizzy.",
+            "primary_label": "Shop the goodies",
+            "primary_link": "shopify://collections/all",
+            "secondary_label": "Our story",
+            "secondary_link": "shopify://pages/about"
+          }
+        },
+        "slide_2": {
+          "type": "slide",
+          "settings": {
+            "bg_color": "sky",
+            "tag": "Cat club · 30% off",
+            "heading": "<p>Keep your<br><em>weird cat</em> happy.</p>",
+            "subtext": "Toys that bonk, beds that hug, and snacks they'll actually eat. Cat-approved, promise.",
+            "primary_label": "Shop for cats",
+            "primary_link": "shopify://collections/all",
+            "secondary_label": "Bestsellers",
+            "secondary_link": "#bestsellers"
+          }
+        },
+        "slide_3": {
+          "type": "slide",
+          "settings": {
+            "bg_color": "mint",
+            "tag": "Subscribe & save 15%",
+            "heading": "<p>Fresh box,<br><em>every month</em>.</p>",
+            "subtext": "Let us pack the perfect bundle for your pup or kitty. Skip or swap anytime, no commitments.",
+            "primary_label": "Build my box",
+            "primary_link": "shopify://collections/all",
+            "secondary_label": "How it works",
+            "secondary_link": "#how"
+          }
+        }
+      },
+      "block_order": ["slide_1", "slide_2", "slide_3"],
+      "settings": {
+        "show_sticker": true,
+        "sticker_text": "MADE WITH LOVE ★ TAIL TESTED ★ "
+      }
+    },
+    "features": {
+      "type": "paws-features",
+      "blocks": {
+        "f1": { "type": "feature", "settings": { "icon": "truck", "icon_color": "yellow", "heading": "Free shipping", "subtext": "On all orders over $50" } },
+        "f2": { "type": "feature", "settings": { "icon": "heart", "icon_color": "coral", "heading": "Cruelty-free", "subtext": "Always, always, always" } },
+        "f3": { "type": "feature", "settings": { "icon": "check", "icon_color": "mint", "heading": "Vet approved", "subtext": "Every single product" } },
+        "f4": { "type": "feature", "settings": { "icon": "clock", "icon_color": "sky", "heading": "30-day returns", "subtext": "No fuss, full refund" } }
+      },
+      "block_order": ["f1", "f2", "f3", "f4"]
+    },
+    "categories": {
+      "type": "paws-categories",
+      "blocks": {
+        "c1": { "type": "category", "settings": { "title": "For Dogs", "subtext": "Good boys deserve the best", "count": "124 items", "link": "shopify://collections/all" } },
+        "c2": { "type": "category", "settings": { "title": "For Cats", "subtext": "Royalty-grade essentials", "count": "86 items", "link": "shopify://collections/all" } },
+        "c3": { "type": "category", "settings": { "title": "Small Pets", "subtext": "Tiny friends, big love", "count": "38 items", "link": "shopify://collections/all" } },
+        "c4": { "type": "category", "settings": { "title": "Grooming", "subtext": "Looking sharp, smelling fresh", "count": "44 items", "link": "shopify://collections/all" } }
+      },
+      "block_order": ["c1", "c2", "c3", "c4"],
+      "settings": {
+        "eyebrow_icon": "🐾",
+        "eyebrow": "shop by pet",
+        "heading": "<p>What's your<br>best friend?</p>",
+        "link_label": "View all",
+        "link_url": "shopify://collections/all"
+      }
+    },
+    "bestsellers": {
+      "type": "paws-bestsellers",
+      "blocks": {
+        "flt1": { "type": "filter", "settings": { "label": "Food & Treats", "filter_key": "food" } },
+        "flt2": { "type": "filter", "settings": { "label": "Toys", "filter_key": "toys" } },
+        "flt3": { "type": "filter", "settings": { "label": "Beds", "filter_key": "beds" } },
+        "flt4": { "type": "filter", "settings": { "label": "Grooming", "filter_key": "grooming" } }
+      },
+      "block_order": ["flt1", "flt2", "flt3", "flt4"],
+      "settings": {
+        "eyebrow_icon": "⭐",
+        "eyebrow": "top dogs (and cats)",
+        "heading": "<p>The crowd pleasers</p>",
+        "link_label": "Shop all",
+        "link_url": "shopify://collections/all",
+        "collection": "all",
+        "product_count": 8,
+        "show_filters": true
+      }
+    },
+    "promo": {
+      "type": "paws-promo",
+      "settings": {
+        "anchor": "how",
+        "eyebrow_icon": "📦",
+        "eyebrow": "the paws box",
+        "heading": "<p>A monthly box built<br>just for them.</p>",
+        "subtext": "Take our 2-minute quiz. We'll assemble a box of treats, toys, and goodies tailored to their size, allergies, and personality. Love it or return it free.",
+        "button_label": "Take the quiz",
+        "button_link": "shopify://collections/all",
+        "sticker_text": "SAVE<br>15%"
+      }
+    },
+    "stats": {
+      "type": "paws-stats",
+      "blocks": {
+        "s1": { "type": "stat", "settings": { "number": "86000", "suffix": "+", "label": "Happy Tails" } },
+        "s2": { "type": "stat", "settings": { "number": "340", "suffix": "+", "label": "Tail-Tested Products" } },
+        "s3": { "type": "stat", "settings": { "number": "98", "suffix": "%", "label": "Reorder Rate" } },
+        "s4": { "type": "stat", "settings": { "number": "12", "suffix": "", "label": "Years of Zoomies" } }
+      },
+      "block_order": ["s1", "s2", "s3", "s4"]
+    },
+    "testimonials": {
+      "type": "paws-testimonials",
+      "blocks": {
+        "t1": { "type": "testimonial", "settings": { "bg_color": "white", "name": "Maya K.", "role": "Biscuit's human", "quote": "My beagle Biscuit lost his mind over the Salmon Crunchies. Like, actual full-body zoomies. 10/10 would spoil again." } },
+        "t2": { "type": "testimonial", "settings": { "bg_color": "mint", "name": "Dev R.", "role": "Staff to Princess Whiskers", "quote": "Finally a bed that my picky cat actually uses. She's reclaimed her throne and is back to judging us from above." } },
+        "t3": { "type": "testimonial", "settings": { "bg_color": "yellow", "name": "Priya S.", "role": "Coco's person", "quote": "The monthly box is genuinely the highlight of my dog's week. She knows the delivery guy by name now." } },
+        "t4": { "type": "testimonial", "settings": { "bg_color": "pink", "name": "Arjun P.", "role": "Dog parent of 3", "quote": "Packaging is so cute I keep the boxes. Also the shampoo smells like a hug. Basically perfect." } }
+      },
+      "block_order": ["t1", "t2", "t3", "t4"]
+    },
+    "journal": {
+      "type": "paws-journal",
+      "blocks": {
+        "p1": { "type": "post", "settings": { "tag": "Nutrition", "title": "The real truth about grain-free diets (from an actual vet)", "date": "April 8 · 6 min read" } },
+        "p2": { "type": "post", "settings": { "tag": "Training", "title": "5 enrichment games that actually tire your pup out", "date": "April 2 · 4 min read" } },
+        "p3": { "type": "post", "settings": { "tag": "Cat Life", "title": "Is your cat a weirdo? Great. Here's why.", "date": "March 28 · 5 min read" } }
+      },
+      "block_order": ["p1", "p2", "p3"]
+    },
+    "newsletter": {
+      "type": "paws-newsletter",
+      "settings": {
+        "eyebrow_icon": "💌",
+        "eyebrow": "join the pack",
+        "heading": "Get 20% off your first order",
+        "subtext": "Plus sneak peeks, new drops, and tail-wagging tips. No spam, just good boys.",
+        "input_placeholder": "your@email.com",
+        "button_label": "Sign me up!"
+      }
+    }
+  },
+  "order": ["hero", "features", "categories", "bestsellers", "promo", "stats", "testimonials", "journal", "newsletter"]
+}

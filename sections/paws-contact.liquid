@@ -1,0 +1,117 @@
+{% comment %} Paws & Co. Contact — form + contact info cards {% endcomment %}
+<section class="paws-contact-section">
+  <div class="paws-wrap">
+    <div class="paws-contact-layout">
+      {% form 'contact', class: 'paws-contact-form paws-reveal-up' %}
+        <h3 style="margin-bottom: 1.5rem; font-family: var(--paws-font-display); font-weight: 400; font-size: 1.75rem;">{{ section.settings.form_heading }}</h3>
+
+        {% if form.posted_successfully? %}
+          <div class="paws-form-success" style="padding: 1rem; background: var(--paws-mint); border: var(--paws-border); border-radius: var(--paws-radius); margin-bottom: 1rem; font-weight: 700;">
+            ✓ Thanks! We'll get back to you soon.
+          </div>
+        {% endif %}
+        {% if form.errors %}
+          <div class="paws-form-errors" style="padding: 1rem; background: var(--paws-coral); color: var(--paws-white); border: var(--paws-border); border-radius: var(--paws-radius); margin-bottom: 1rem; font-weight: 700;">
+            {{ form.errors | default_errors }}
+          </div>
+        {% endif %}
+
+        <div class="paws-field-row">
+          <div class="paws-field">
+            <label for="ContactFormFirstName">First name</label>
+            <input id="ContactFormFirstName" type="text" name="contact[first_name]" placeholder="Your name" required>
+          </div>
+          <div class="paws-field">
+            <label for="ContactFormLastName">Last name</label>
+            <input id="ContactFormLastName" type="text" name="contact[last_name]" placeholder="Last name">
+          </div>
+        </div>
+        <div class="paws-field">
+          <label for="ContactFormEmail">Email</label>
+          <input id="ContactFormEmail" type="email" name="contact[email]" placeholder="your@email.com" required>
+        </div>
+        <div class="paws-field">
+          <label for="ContactFormSubject">What's up?</label>
+          <select id="ContactFormSubject" name="contact[subject]">
+            <option>General question</option>
+            <option>Order support</option>
+            <option>Product feedback</option>
+            <option>Wholesale / bulk</option>
+            <option>Press & partnerships</option>
+            <option>Just saying hi 👋</option>
+          </select>
+        </div>
+        <div class="paws-field">
+          <label for="ContactFormPetName">Your pet's name (optional, but please)</label>
+          <input id="ContactFormPetName" type="text" name="contact[pet_name]" placeholder="e.g. Biscuit">
+        </div>
+        <div class="paws-field">
+          <label for="ContactFormMessage">Message</label>
+          <textarea id="ContactFormMessage" name="contact[body]" placeholder="Tell us what's on your mind..." rows="5"></textarea>
+        </div>
+        <button type="submit" class="paws-btn paws-btn--coral paws-btn--lg" style="width: 100%; justify-content: center;">
+          Send message
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </button>
+      {% endform %}
+
+      <div class="paws-contact-info">
+        {% for block in section.blocks %}
+          <div class="paws-contact-card paws-reveal-up{% if forloop.index0 > 0 %} delay-{{ forloop.index0 }}{% endif %}" {{ block.shopify_attributes }}>
+            <div class="paws-contact-card-icon">
+              {% case block.settings.icon %}
+                {% when 'mail' %}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="m22 6-10 7L2 6"/></svg>
+                {% when 'phone' %}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                {% when 'map' %}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                {% when 'clock' %}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              {% endcase %}
+            </div>
+            <div>
+              <h4>{{ block.settings.title }}</h4>
+              <p>{{ block.settings.body }}</p>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Paws Contact",
+  "tag": "section",
+  "class": "paws-section-contact",
+  "settings": [
+    { "type": "text", "id": "form_heading", "label": "Form heading", "default": "Send us a message" }
+  ],
+  "blocks": [
+    {
+      "type": "info_card",
+      "name": "Info card",
+      "limit": 8,
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "options": [
+          { "value": "mail", "label": "Mail" },
+          { "value": "phone", "label": "Phone" },
+          { "value": "map", "label": "Map pin" },
+          { "value": "clock", "label": "Clock" }
+        ], "default": "mail" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Email us" },
+        { "type": "html", "id": "body", "label": "Body (supports <br>)", "default": "hello@pawsandco.com" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Paws Contact",
+      "blocks": [
+        { "type": "info_card", "settings": { "icon": "mail", "title": "Email us", "body": "hello@pawsandco.com" } },
+        { "type": "info_card", "settings": { "icon": "phone", "title": "Call us", "body": "(503) 555-PAWS" } },
+        { "type": "info_card", "settings": { "icon": "map", "title": "Visit our shop", "body": "422 NW 23rd Ave<br>Portland, OR 97210" } },
+        { "type": "info_card", "settings": { "icon": "clock", "title": "Shop hours", "body": "Mon–Sat · 10am–7pm<br>Sun · 11am–5pm" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

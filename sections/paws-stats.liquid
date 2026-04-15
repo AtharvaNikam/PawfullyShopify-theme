@@ -1,0 +1,45 @@
+{% comment %} Paws & Co. Stats Bar — yellow background with animated counters {% endcomment %}
+<section class="paws-stats">
+  <div class="paws-wrap">
+    <div class="paws-stats-grid">
+      {% for block in section.blocks %}
+        <div class="paws-stat paws-reveal-up{% if forloop.index0 > 0 %} delay-{{ forloop.index0 }}{% endif %}" {{ block.shopify_attributes }}>
+          <div class="paws-stat-num" data-paws-count="{{ block.settings.number }}"{% if block.settings.suffix != blank %} data-paws-suffix="{{ block.settings.suffix }}"{% endif %}>0</div>
+          <div class="paws-stat-label">{{ block.settings.label }}</div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Paws Stats",
+  "tag": "section",
+  "class": "paws-section-stats",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "limit": 6,
+      "settings": [
+        { "type": "text", "id": "number", "label": "Number (integer)", "default": "86000" },
+        { "type": "text", "id": "suffix", "label": "Suffix (e.g. +, %, K)", "default": "" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Happy Tails" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Paws Stats",
+      "blocks": [
+        { "type": "stat", "settings": { "number": "86000", "suffix": "+", "label": "Happy Tails" } },
+        { "type": "stat", "settings": { "number": "340", "suffix": "+", "label": "Tail-Tested Products" } },
+        { "type": "stat", "settings": { "number": "98", "suffix": "%", "label": "Reorder Rate" } },
+        { "type": "stat", "settings": { "number": "12", "suffix": "", "label": "Years of Zoomies" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,58 @@
+{% comment %} Paws & Co. Values — 3 value cards with emoji icons {% endcomment %}
+<section class="paws-values">
+  <div class="paws-wrap">
+    <div class="paws-section-head paws-reveal-up">
+      <div>
+        {% if section.settings.eyebrow != blank %}
+          <span class="paws-eyebrow"><span>{{ section.settings.eyebrow_icon }}</span> {{ section.settings.eyebrow }}</span>
+        {% endif %}
+        <h2>{{ section.settings.heading }}</h2>
+      </div>
+    </div>
+
+    <div class="paws-values-grid">
+      {% for block in section.blocks %}
+        <div class="paws-value-card paws-reveal-up{% if forloop.index0 > 0 %} delay-{{ forloop.index0 }}{% endif %}" {{ block.shopify_attributes }}>
+          <span class="paws-value-emoji">{{ block.settings.emoji }}</span>
+          <h3>{{ block.settings.title }}</h3>
+          <p>{{ block.settings.body }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Paws Values",
+  "tag": "section",
+  "class": "paws-section-values",
+  "settings": [
+    { "type": "text", "id": "eyebrow_icon", "label": "Eyebrow emoji", "default": "⚡" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow label", "default": "what we stand for" },
+    { "type": "richtext", "id": "heading", "label": "Heading", "default": "<p>Three things we<br>won't budge on</p>" }
+  ],
+  "blocks": [
+    {
+      "type": "value",
+      "name": "Value",
+      "limit": 6,
+      "settings": [
+        { "type": "text", "id": "emoji", "label": "Emoji", "default": "🌿" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Real ingredients" },
+        { "type": "textarea", "id": "body", "label": "Body", "default": "If we wouldn't feed it to our own pets, it's not going on our shelf." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Paws Values",
+      "blocks": [
+        { "type": "value", "settings": { "emoji": "🌿", "title": "Real ingredients", "body": "If we wouldn't feed it to our own pets, it's not going on our shelf. Real food, identifiable first. No mystery meats, no filler fluff." } },
+        { "type": "value", "settings": { "emoji": "💛", "title": "Tail-tested", "body": "Every single product goes through our in-house panel of 47 dogs, 23 cats, and 3 very opinionated rabbits before it hits the shop." } },
+        { "type": "value", "settings": { "emoji": "🌍", "title": "Better for the planet", "body": "Compostable packaging, carbon-neutral shipping, and 1% of every sale goes to local shelters. Small steps, big tails." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

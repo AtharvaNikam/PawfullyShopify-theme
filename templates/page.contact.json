@@ -1,1 +1,51 @@
-{"sections":{"main":{"type":"main-page","blocks":{"title":{"type":"text","name":"t:names.title","settings":{"text":"<h2>{{ closest.page.title }}<\/h2>","width":"100%","max_width":"normal","alignment":"center","type_preset":"h2","font":"var(--font-primary--family)","font_size":"","line_height":"normal","letter_spacing":"normal","case":"none","wrap":"pretty","color":"","background":false,"background_color":"#00000026","corner_radius":0,"padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{}},"content":{"type":"text","name":"t:names.content","settings":{"text":"{{ closest.page.content }}","width":"100%","max_width":"narrow","alignment":"center","type_preset":"rte","font":"var(--font-primary--family)","font_size":"","line_height":"normal","letter_spacing":"normal","case":"none","wrap":"pretty","color":"","background":false,"background_color":"#00000026","corner_radius":0,"padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{}}},"block_order":["title","content"],"settings":{"content_direction":"column","gap":32,"color_scheme":"","padding-block-start":40,"padding-block-end":0}},"form":{"type":"section","blocks":{"contact_form_UwiCkQ":{"type":"contact-form","settings":{"width":"custom","custom_width":50,"width_mobile":"custom","custom_width_mobile":100,"inherit_color_scheme":true,"color_scheme":"","padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{"submit-button":{"type":"contact-form-submit-button","static":true,"settings":{"label":"Submit","style_class":"button","width":"fit-content","custom_width":100,"width_mobile":"fit-content","custom_width_mobile":100},"blocks":{}}},"block_order":[]}},"block_order":["contact_form_UwiCkQ"],"name":"t:names.contact_form","settings":{"content_direction":"column","vertical_on_mobile":true,"horizontal_alignment":"flex-start","vertical_alignment":"center","align_baseline":false,"horizontal_alignment_flex_direction_column":"center","vertical_alignment_flex_direction_column":"center","gap":32,"section_width":"page-width","section_height":"","section_height_custom":50,"color_scheme":"scheme-1","background_media":"none","video_position":"cover","background_image_position":"cover","border":"none","border_width":1,"border_opacity":100,"border_radius":0,"toggle_overlay":false,"overlay_color":"#00000026","overlay_style":"solid","gradient_direction":"to top","padding-block-start":32,"padding-block-end":84}}},"order":["main","form"]}
+{
+  "sections": {
+    "page_header": {
+      "type": "paws-page-header",
+      "settings": {
+        "show_breadcrumb": true,
+        "current_label": "Contact",
+        "heading": "<p>Say woof!</p>",
+        "subtext": "Questions, feedback, or just want to share a pic of your pet? We'd genuinely love to hear from you."
+      }
+    },
+    "contact": {
+      "type": "paws-contact",
+      "blocks": {
+        "c1": { "type": "info_card", "settings": { "icon": "mail", "title": "Email us", "body": "hello@pawsandco.com" } },
+        "c2": { "type": "info_card", "settings": { "icon": "phone", "title": "Call us", "body": "(503) 555-PAWS" } },
+        "c3": { "type": "info_card", "settings": { "icon": "map", "title": "Visit our shop", "body": "422 NW 23rd Ave<br>Portland, OR 97210" } },
+        "c4": { "type": "info_card", "settings": { "icon": "clock", "title": "Shop hours", "body": "Mon–Sat · 10am–7pm<br>Sun · 11am–5pm" } }
+      },
+      "block_order": ["c1", "c2", "c3", "c4"],
+      "settings": {
+        "form_heading": "Send us a message"
+      }
+    },
+    "map": {
+      "type": "paws-map",
+      "settings": {
+        "eyebrow_icon": "📍",
+        "eyebrow": "come hang out",
+        "heading": "<p>Visit the flagship</p>",
+        "map_embed_url": "https://www.openstreetmap.org/export/embed.html?bbox=-122.7056,45.5253,-122.6911,45.5362&layer=mapnik&marker=45.5308,-122.6983"
+      }
+    },
+    "faq": {
+      "type": "paws-faq",
+      "blocks": {
+        "q1": { "type": "faq", "settings": { "question": "How fast is shipping?", "answer": "Most orders ship within 24 hours. US delivery takes 2–5 business days. International: 7–14 days." } },
+        "q2": { "type": "faq", "settings": { "question": "What if my pet doesn't love it?", "answer": "We have a Happy Tails Guarantee — 30 days to return unopened items for a full refund. No drama." } },
+        "q3": { "type": "faq", "settings": { "question": "Are your products vet-approved?", "answer": "Yes — every recipe is reviewed by our in-house vet Dr. Priya and a rotating panel of independent vets." } },
+        "q4": { "type": "faq", "settings": { "question": "Do you ship internationally?", "answer": "We ship to Canada, UK, Australia, and the EU. More regions coming soon. Contact us for custom quotes." } },
+        "q5": { "type": "faq", "settings": { "question": "Can I modify my subscription?", "answer": "Of course! Skip, swap, pause, or cancel anytime from your account dashboard. No weird fees." } },
+        "q6": { "type": "faq", "settings": { "question": "Do you offer wholesale?", "answer": "We love partnering with local pet stores, groomers, and vets. Email wholesale@pawsandco.com to chat." } }
+      },
+      "block_order": ["q1", "q2", "q3", "q4", "q5", "q6"]
+    },
+    "newsletter": {
+      "type": "paws-newsletter"
+    }
+  },
+  "order": ["page_header", "contact", "map", "faq", "newsletter"]
+}

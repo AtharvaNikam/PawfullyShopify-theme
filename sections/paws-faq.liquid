@@ -1,0 +1,59 @@
+{% comment %} Paws & Co. FAQ Grid — 6 cards on sky background {% endcomment %}
+<section class="paws-faq-section" style="background: var(--paws-sky);">
+  <div class="paws-wrap">
+    <div class="paws-section-head paws-reveal-up">
+      <div>
+        {% if section.settings.eyebrow != blank %}
+          <span class="paws-eyebrow" style="color: var(--paws-ink);"><span>{{ section.settings.eyebrow_icon }}</span> {{ section.settings.eyebrow }}</span>
+        {% endif %}
+        <h2>{{ section.settings.heading }}</h2>
+      </div>
+    </div>
+
+    <div class="paws-faq-grid">
+      {% for block in section.blocks %}
+        <div class="paws-faq-card paws-reveal-up{% if forloop.index0 > 0 %} delay-{{ forloop.index0 | modulo: 4 }}{% endif %}" {{ block.shopify_attributes }}>
+          <h4>{{ block.settings.question }}</h4>
+          <p>{{ block.settings.answer }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Paws FAQ",
+  "tag": "section",
+  "class": "paws-section-faq",
+  "settings": [
+    { "type": "text", "id": "eyebrow_icon", "label": "Eyebrow emoji", "default": "❓" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow label", "default": "frequently woofed questions" },
+    { "type": "richtext", "id": "heading", "label": "Heading", "default": "<p>Quick answers</p>" }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ",
+      "limit": 20,
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "How fast is shipping?" },
+        { "type": "textarea", "id": "answer", "label": "Answer", "default": "Most orders ship within 24 hours." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Paws FAQ",
+      "blocks": [
+        { "type": "faq", "settings": { "question": "How fast is shipping?", "answer": "Most orders ship within 24 hours. US delivery takes 2–5 business days. International: 7–14 days." } },
+        { "type": "faq", "settings": { "question": "What if my pet doesn't love it?", "answer": "We have a Happy Tails Guarantee — 30 days to return unopened items for a full refund. No drama." } },
+        { "type": "faq", "settings": { "question": "Are your products vet-approved?", "answer": "Yes — every recipe is reviewed by our in-house vet Dr. Priya and a rotating panel of independent vets." } },
+        { "type": "faq", "settings": { "question": "Do you ship internationally?", "answer": "We ship to Canada, UK, Australia, and the EU. More regions coming soon. Contact us for custom quotes." } },
+        { "type": "faq", "settings": { "question": "Can I modify my subscription?", "answer": "Of course! Skip, swap, pause, or cancel anytime from your account dashboard. No weird fees." } },
+        { "type": "faq", "settings": { "question": "Do you offer wholesale?", "answer": "We love partnering with local pet stores, groomers, and vets. Email wholesale@pawsandco.com to chat." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

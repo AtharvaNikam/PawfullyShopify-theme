@@ -1,0 +1,95 @@
+{% comment %} Paws & Co. Journal / Blog Grid {% endcomment %}
+<section class="paws-journal">
+  <div class="paws-wrap">
+    <div class="paws-section-head paws-reveal-up">
+      <div>
+        {% if section.settings.eyebrow != blank %}
+          <span class="paws-eyebrow"><span>{{ section.settings.eyebrow_icon }}</span> {{ section.settings.eyebrow }}</span>
+        {% endif %}
+        <h2>{{ section.settings.heading }}</h2>
+      </div>
+      {% if section.settings.link_label != blank %}
+        <a href="{{ section.settings.link_url | default: '/blogs/news' }}" class="paws-btn paws-btn--ink paws-btn--sm">{{ section.settings.link_label }} →</a>
+      {% endif %}
+    </div>
+
+    <div class="paws-blog-grid">
+      {%- assign blog_handle = section.settings.blog -%}
+      {%- if blog_handle != blank and blogs[blog_handle].articles.size > 0 -%}
+        {%- for article in blogs[blog_handle].articles limit: 3 -%}
+          <a href="{{ article.url }}" class="paws-blog-card paws-reveal-up{% if forloop.index0 > 0 %} delay-{{ forloop.index0 }}{% endif %}">
+            <div class="paws-blog-image">
+              {% if article.image != blank %}
+                {{ article.image | image_url: width: 700 | image_tag: loading: 'lazy', alt: article.title }}
+              {% endif %}
+            </div>
+            <div class="paws-blog-content">
+              {% if article.tags.size > 0 %}
+                <span class="paws-blog-tag">{{ article.tags.first }}</span>
+              {% endif %}
+              <h3>{{ article.title }}</h3>
+              <span class="paws-blog-date">{{ article.published_at | date: '%B %d' }} · {{ article.content | strip_html | wordcount | divided_by: 200 | at_least: 1 }} min read</span>
+            </div>
+          </a>
+        {%- endfor -%}
+      {%- else -%}
+        {% for block in section.blocks %}
+          <a href="{{ block.settings.link | default: '#' }}" class="paws-blog-card paws-reveal-up{% if forloop.index0 > 0 %} delay-{{ forloop.index0 }}{% endif %}" {{ block.shopify_attributes }}>
+            <div class="paws-blog-image">
+              {% if block.settings.image != blank %}
+                {{ block.settings.image | image_url: width: 700 | image_tag: loading: 'lazy', alt: block.settings.title }}
+              {% endif %}
+            </div>
+            <div class="paws-blog-content">
+              {% if block.settings.tag != blank %}
+                <span class="paws-blog-tag">{{ block.settings.tag }}</span>
+              {% endif %}
+              <h3>{{ block.settings.title }}</h3>
+              <span class="paws-blog-date">{{ block.settings.date }}</span>
+            </div>
+          </a>
+        {% endfor %}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Paws Journal",
+  "tag": "section",
+  "class": "paws-section-journal",
+  "settings": [
+    { "type": "text", "id": "eyebrow_icon", "label": "Eyebrow emoji", "default": "📖" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow label", "default": "the paws journal" },
+    { "type": "richtext", "id": "heading", "label": "Heading", "default": "<p>Stories, tips &<br>woofs of wisdom</p>" },
+    { "type": "text", "id": "link_label", "label": "Link label", "default": "All posts" },
+    { "type": "url", "id": "link_url", "label": "Link URL" },
+    { "type": "blog", "id": "blog", "label": "Source blog (overrides manual posts)" }
+  ],
+  "blocks": [
+    {
+      "type": "post",
+      "name": "Manual post",
+      "limit": 6,
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "tag", "label": "Tag", "default": "Nutrition" },
+        { "type": "text", "id": "title", "label": "Title", "default": "The real truth about grain-free diets" },
+        { "type": "text", "id": "date", "label": "Date line", "default": "April 8 · 6 min read" },
+        { "type": "url", "id": "link", "label": "Link URL" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Paws Journal",
+      "blocks": [
+        { "type": "post", "settings": { "tag": "Nutrition", "title": "The real truth about grain-free diets (from an actual vet)", "date": "April 8 · 6 min read" } },
+        { "type": "post", "settings": { "tag": "Training", "title": "5 enrichment games that actually tire your pup out", "date": "April 2 · 4 min read" } },
+        { "type": "post", "settings": { "tag": "Cat Life", "title": "Is your cat a weirdo? Great. Here's why.", "date": "March 28 · 5 min read" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

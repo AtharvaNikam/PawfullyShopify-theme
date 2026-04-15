@@ -1,0 +1,65 @@
+{% comment %} Paws & Co. Team — 4 member grid with tilt on hover {% endcomment %}
+<section class="paws-team">
+  <div class="paws-wrap">
+    <div class="paws-section-head paws-reveal-up">
+      <div>
+        {% if section.settings.eyebrow != blank %}
+          <span class="paws-eyebrow"><span>{{ section.settings.eyebrow_icon }}</span> {{ section.settings.eyebrow }}</span>
+        {% endif %}
+        <h2>{{ section.settings.heading }}</h2>
+      </div>
+    </div>
+
+    <div class="paws-team-grid">
+      {% for block in section.blocks %}
+        <div class="paws-team-card paws-reveal-up{% if forloop.index0 > 0 %} delay-{{ forloop.index0 }}{% endif %}" {{ block.shopify_attributes }}>
+          <div class="paws-team-photo">
+            {% if block.settings.photo != blank %}
+              {{ block.settings.photo | image_url: width: 400 | image_tag: loading: 'lazy', alt: block.settings.name }}
+            {% else %}
+              <img src="https://i.pravatar.cc/400?img={{ forloop.index | plus: 4 }}" alt="{{ block.settings.name }}" loading="lazy">
+            {% endif %}
+          </div>
+          <h4>{{ block.settings.name }}</h4>
+          <span>{{ block.settings.role }}</span>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Paws Team",
+  "tag": "section",
+  "class": "paws-section-team",
+  "settings": [
+    { "type": "text", "id": "eyebrow_icon", "label": "Eyebrow emoji", "default": "🐕" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow label", "default": "the humans (and their bosses)" },
+    { "type": "richtext", "id": "heading", "label": "Heading", "default": "<p>Meet the pack</p>" }
+  ],
+  "blocks": [
+    {
+      "type": "member",
+      "name": "Team member",
+      "limit": 12,
+      "settings": [
+        { "type": "image_picker", "id": "photo", "label": "Photo" },
+        { "type": "text", "id": "name", "label": "Name", "default": "Jessie Park" },
+        { "type": "text", "id": "role", "label": "Role", "default": "Founder · Chief Zoomies Officer" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Paws Team",
+      "blocks": [
+        { "type": "member", "settings": { "name": "Jessie Park", "role": "Founder · Chief Zoomies Officer" } },
+        { "type": "member", "settings": { "name": "Marco Rivera", "role": "Head of Nibble R&D" } },
+        { "type": "member", "settings": { "name": "Dr. Priya Kapoor", "role": "In-house Vet" } },
+        { "type": "member", "settings": { "name": "Sam Chen", "role": "Pack Experience Lead" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

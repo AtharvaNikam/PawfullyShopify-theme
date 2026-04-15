@@ -1,0 +1,53 @@
+{% comment %} Paws & Co. Sticky Header — logo + nav + actions {% endcomment %}
+<header class="paws-header">
+  <div class="paws-header-inner">
+    <a href="{{ routes.root_url }}" class="paws-logo">
+      <span class="paws-logo-badge">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><circle cx="5" cy="9" r="2.2"/><circle cx="19" cy="9" r="2.2"/><circle cx="9" cy="5" r="2"/><circle cx="15" cy="5" r="2"/><path d="M12 11c-3.5 0-6 2.8-6 5.5 0 2 1.5 3.5 3.5 3.5 1 0 1.8-.4 2.5-.9.7.5 1.5.9 2.5.9 2 0 3.5-1.5 3.5-3.5 0-2.7-2.5-5.5-6-5.5z"/></svg>
+      </span>
+      {{ section.settings.brand_name | default: shop.name }}
+    </a>
+
+    <nav class="paws-nav">
+      {%- assign menu = section.settings.menu -%}
+      {%- if menu != blank and linklists[menu].links.size > 0 -%}
+        {%- for link in linklists[menu].links -%}
+          <a href="{{ link.url }}"{% if link.active %} class="active"{% endif %}>{{ link.title }}</a>
+        {%- endfor -%}
+      {%- else -%}
+        <a href="{{ routes.root_url }}"{% if request.page_type == 'index' %} class="active"{% endif %}>Home</a>
+        <a href="/collections/all"{% if request.page_type == 'collection' %} class="active"{% endif %}>Shop</a>
+        <a href="/pages/about"{% if request.path contains '/pages/about' %} class="active"{% endif %}>About</a>
+        <a href="/pages/contact"{% if request.path contains '/pages/contact' %} class="active"{% endif %}>Contact</a>
+      {%- endif -%}
+    </nav>
+
+    <div class="paws-header-actions">
+      <button class="paws-icon-btn" aria-label="Search" data-paws-search-open type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" width="20" height="20"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      </button>
+      <a href="{{ routes.account_url }}" class="paws-icon-btn" aria-label="Account">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </a>
+      <button class="paws-icon-btn" aria-label="Cart" data-paws-cart-open type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span class="paws-cart-count">{{ cart.item_count }}</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Paws Header",
+  "tag": "section",
+  "class": "paws-section-header",
+  "settings": [
+    { "type": "text", "id": "brand_name", "label": "Brand name", "default": "paws & co." },
+    { "type": "link_list", "id": "menu", "label": "Navigation menu" }
+  ],
+  "enabled_on": {
+    "groups": ["header"]
+  }
+}
+{% endschema %}

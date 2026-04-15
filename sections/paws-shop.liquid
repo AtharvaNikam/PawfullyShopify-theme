@@ -1,0 +1,226 @@
+{% comment %} Paws & Co. Shop — sidebar filters + product grid from collection {% endcomment %}
+{% paginate collection.products by section.settings.products_per_page %}
+<section class="paws-shop-section">
+  <div class="paws-wrap">
+    <div class="paws-shop-layout">
+      <aside class="paws-shop-sidebar">
+        {% comment %} Pet filter {% endcomment %}
+        <div class="paws-filter-group">
+          <h4>Pet</h4>
+          <ul class="paws-filter-list">
+            {% for block in section.blocks %}
+              {% if block.type == 'filter_pet' %}
+                <li>
+                  <label>
+                    <input type="checkbox" name="filter.v.option.pet" value="{{ block.settings.value }}">
+                    {{ block.settings.label }} {% if block.settings.count != blank %}<span class="paws-filter-count">{{ block.settings.count }}</span>{% endif %}
+                  </label>
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+
+        {% comment %} Category filter (uses collection.filters if available) {% endcomment %}
+        {% if collection.filters.size > 0 %}
+          {% for filter in collection.filters %}
+            {% if filter.type == 'list' and filter.presentation != 'swatch' %}
+              <div class="paws-filter-group">
+                <h4>{{ filter.label }}</h4>
+                <ul class="paws-filter-list">
+                  {% for value in filter.values %}
+                    <li>
+                      <label>
+                        <input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}" {% if value.active %}checked{% endif %}>
+                        {{ value.label }} <span class="paws-filter-count">{{ value.count }}</span>
+                      </label>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% elsif filter.type == 'price_range' %}
+              <div class="paws-filter-group">
+                <h4>Price</h4>
+                <div class="paws-price-range">
+                  <input type="number" name="{{ filter.min_value.param_name }}" placeholder="$ min" value="{{ filter.min_value.value }}">
+                  <input type="number" name="{{ filter.max_value.param_name }}" placeholder="$ max" value="{{ filter.max_value.value }}">
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        {% else %}
+          <div class="paws-filter-group">
+            <h4>Category</h4>
+            <ul class="paws-filter-list">
+              {% for block in section.blocks %}
+                {% if block.type == 'filter_category' %}
+                  <li>
+                    <label>
+                      <input type="checkbox" value="{{ block.settings.value }}">
+                      {{ block.settings.label }} {% if block.settings.count != blank %}<span class="paws-filter-count">{{ block.settings.count }}</span>{% endif %}
+                    </label>
+                  </li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          </div>
+          <div class="paws-filter-group">
+            <h4>Price</h4>
+            <div class="paws-price-range">
+              <input type="number" placeholder="$ min">
+              <input type="number" placeholder="$ max">
+            </div>
+          </div>
+        {% endif %}
+
+        {% comment %} Color swatches (static in design, used as brand accent) {% endcomment %}
+        <div class="paws-filter-group">
+          <h4>Color</h4>
+          <div class="paws-color-swatches">
+            <button class="paws-swatch" style="background:#FFD84D" aria-label="Yellow" type="button"></button>
+            <button class="paws-swatch active" style="background:#FF7043" aria-label="Coral" type="button"></button>
+            <button class="paws-swatch" style="background:#5BC3EB" aria-label="Sky" type="button"></button>
+            <button class="paws-swatch" style="background:#7FE6C4" aria-label="Mint" type="button"></button>
+            <button class="paws-swatch" style="background:#FF6B9D" aria-label="Pink" type="button"></button>
+            <button class="paws-swatch" style="background:#1A1A1A" aria-label="Ink" type="button"></button>
+          </div>
+        </div>
+
+        <button class="paws-btn paws-btn--coral" style="width: 100%; justify-content: center;" type="button">Apply Filters</button>
+      </aside>
+
+      <div class="paws-shop-main">
+        <div class="paws-shop-toolbar">
+          <span class="paws-count">
+            Showing <strong>{{ collection.products_count | default: paginate.page_size }}</strong>
+            of <strong>{{ collection.all_products_count | default: paginate.items }}</strong> products
+          </span>
+          <form class="paws-sort-form">
+            <select class="paws-sort-select" name="sort_by" onchange="this.form.submit()">
+              {% assign sort_options = collection.sort_options %}
+              {% if sort_options.size > 0 %}
+                {% for option in sort_options %}
+                  <option value="{{ option.value }}" {% if collection.sort_by == option.value %}selected{% endif %}>{{ option.name }}</option>
+                {% endfor %}
+              {% else %}
+                <option>Sort: Featured</option>
+                <option>Newest</option>
+                <option>Price: Low to High</option>
+                <option>Price: High to Low</option>
+              {% endif %}
+            </select>
+          </form>
+        </div>
+
+        <div class="paws-shop-grid">
+          {%- for product in collection.products -%}
+            <a href="{{ product.url }}" class="paws-product paws-reveal-up" data-product-id="{{ product.id }}">
+              <div class="paws-product-image">
+                {% if product.compare_at_price > product.price %}
+                  {%- assign discount = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round -%}
+                  <span class="paws-product-badge sale">-{{ discount }}%</span>
+                {% elsif product.tags contains 'new' %}
+                  <span class="paws-product-badge new">New</span>
+                {% elsif product.tags contains 'bestseller' %}
+                  <span class="paws-product-badge">Bestseller</span>
+                {% endif %}
+                <button class="paws-wishlist" type="button" aria-label="Add to wishlist" data-product-id="{{ product.id }}">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                </button>
+                {% if product.featured_image %}
+                  {{ product.featured_image | image_url: width: 700 | image_tag: loading: 'lazy', alt: product.title }}
+                {% endif %}
+              </div>
+              <div class="paws-product-info">
+                <div class="paws-product-meta">{{ product.type | default: 'Product' }}</div>
+                <h3>{{ product.title }}</h3>
+                <div class="paws-product-rating">
+                  <span class="stars">★★★★★</span>
+                  <span>{{ product.metafields.reviews.rating.value | default: '4.9' }}</span>
+                </div>
+                <div class="paws-product-footer">
+                  <span class="paws-price">
+                    {% if product.compare_at_price > product.price %}<del>{{ product.compare_at_price | money }}</del>{% endif %}
+                    {{ product.price | money }}
+                  </span>
+                  <button class="paws-quick-add" type="button" aria-label="Quick add" data-variant-id="{{ product.selected_or_first_available_variant.id }}">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" width="18" height="18"><path d="M12 5v14M5 12h14"/></svg>
+                  </button>
+                </div>
+              </div>
+            </a>
+          {%- endfor -%}
+        </div>
+
+        {% if paginate.pages > 1 %}
+          <div class="paws-pagination">
+            {% if paginate.previous %}
+              <a href="{{ paginate.previous.url }}" class="paws-page-btn" aria-label="Previous page">‹</a>
+            {% endif %}
+            {% for part in paginate.parts %}
+              {% if part.is_link %}
+                <a href="{{ part.url }}" class="paws-page-btn">{{ part.title }}</a>
+              {% else %}
+                <span class="paws-page-btn active">{{ part.title }}</span>
+              {% endif %}
+            {% endfor %}
+            {% if paginate.next %}
+              <a href="{{ paginate.next.url }}" class="paws-page-btn" aria-label="Next page">›</a>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endpaginate %}
+
+{% schema %}
+{
+  "name": "Paws Shop",
+  "tag": "section",
+  "class": "paws-section-shop",
+  "settings": [
+    { "type": "range", "id": "products_per_page", "label": "Products per page", "min": 6, "max": 36, "step": 3, "default": 12 }
+  ],
+  "blocks": [
+    {
+      "type": "filter_pet",
+      "name": "Pet filter option",
+      "limit": 10,
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Dogs" },
+        { "type": "text", "id": "value", "label": "Value", "default": "dogs" },
+        { "type": "text", "id": "count", "label": "Count", "default": "124" }
+      ]
+    },
+    {
+      "type": "filter_category",
+      "name": "Category filter option",
+      "limit": 15,
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Food" },
+        { "type": "text", "id": "value", "label": "Value", "default": "food" },
+        { "type": "text", "id": "count", "label": "Count", "default": "64" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Paws Shop",
+      "blocks": [
+        { "type": "filter_pet", "settings": { "label": "Dogs", "value": "dogs", "count": "124" } },
+        { "type": "filter_pet", "settings": { "label": "Cats", "value": "cats", "count": "86" } },
+        { "type": "filter_pet", "settings": { "label": "Small Pets", "value": "small", "count": "38" } },
+        { "type": "filter_pet", "settings": { "label": "Birds & Fish", "value": "birds", "count": "52" } },
+        { "type": "filter_category", "settings": { "label": "Food", "value": "food", "count": "64" } },
+        { "type": "filter_category", "settings": { "label": "Treats", "value": "treats", "count": "48" } },
+        { "type": "filter_category", "settings": { "label": "Toys", "value": "toys", "count": "92" } },
+        { "type": "filter_category", "settings": { "label": "Beds", "value": "beds", "count": "36" } },
+        { "type": "filter_category", "settings": { "label": "Grooming", "value": "grooming", "count": "44" } },
+        { "type": "filter_category", "settings": { "label": "Travel", "value": "travel", "count": "22" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

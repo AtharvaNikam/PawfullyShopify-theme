@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop All · Paws & Co.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="marquee">
+    <div class="marquee-track">
+        <span>🎉 FREE SHIPPING ON ORDERS OVER $50</span>
+        <span>🐾 20% OFF YOUR FIRST BOX — CODE: NEWPUP</span>
+        <span>🦴 VET-APPROVED INGREDIENTS</span>
+        <span>😺 HAPPY TAILS GUARANTEE</span>
+        <span>🎉 FREE SHIPPING ON ORDERS OVER $50</span>
+        <span>🐾 20% OFF YOUR FIRST BOX — CODE: NEWPUP</span>
+    </div>
+</div>
+
+<header class="header">
+    <div class="header-inner">
+        <a href="index.html" class="logo">
+            <span class="logo-badge">
+                <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="9" r="2.2"/><circle cx="19" cy="9" r="2.2"/><circle cx="9" cy="5" r="2"/><circle cx="15" cy="5" r="2"/><path d="M12 11c-3.5 0-6 2.8-6 5.5 0 2 1.5 3.5 3.5 3.5 1 0 1.8-.4 2.5-.9.7.5 1.5.9 2.5.9 2 0 3.5-1.5 3.5-3.5 0-2.7-2.5-5.5-6-5.5z"/></svg>
+            </span>
+            paws & co.
+        </a>
+        <nav class="nav">
+            <a href="index.html">Home</a>
+            <a href="shop.html" class="active">Shop</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+        <div class="header-actions">
+            <button class="icon-btn" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></button>
+            <button class="icon-btn" aria-label="Account"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></button>
+            <button class="icon-btn" id="cartBtn" aria-label="Cart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span class="cart-count">2</span></button>
+        </div>
+    </div>
+</header>
+
+<!-- ── Page Header ── -->
+<section class="page-header">
+    <div class="wrap">
+        <div class="breadcrumb"><a href="index.html">Home</a><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg><span>Shop All</span></div>
+        <h1>The Goodie Collection</h1>
+        <p>Food, toys, beds, grooming and everything in between. 340+ tail-approved picks.</p>
+    </div>
+</section>
+
+<!-- ── Shop Layout ── -->
+<section>
+    <div class="wrap">
+        <div class="shop-layout">
+            <aside class="shop-sidebar">
+                <div class="filter-group">
+                    <h4>Pet</h4>
+                    <ul class="filter-list">
+                        <li><label><input type="checkbox" checked> Dogs <span class="count">124</span></label></li>
+                        <li><label><input type="checkbox"> Cats <span class="count">86</span></label></li>
+                        <li><label><input type="checkbox"> Small Pets <span class="count">38</span></label></li>
+                        <li><label><input type="checkbox"> Birds & Fish <span class="count">52</span></label></li>
+                    </ul>
+                </div>
+                <div class="filter-group">
+                    <h4>Category</h4>
+                    <ul class="filter-list">
+                        <li><label><input type="checkbox"> Food <span class="count">64</span></label></li>
+                        <li><label><input type="checkbox"> Treats <span class="count">48</span></label></li>
+                        <li><label><input type="checkbox"> Toys <span class="count">92</span></label></li>
+                        <li><label><input type="checkbox"> Beds <span class="count">36</span></label></li>
+                        <li><label><input type="checkbox"> Grooming <span class="count">44</span></label></li>
+                        <li><label><input type="checkbox"> Travel <span class="count">22</span></label></li>
+                    </ul>
+                </div>
+                <div class="filter-group">
+                    <h4>Price</h4>
+                    <div class="price-range">
+                        <input type="number" placeholder="$ min">
+                        <input type="number" placeholder="$ max">
+                    </div>
+                </div>
+                <div class="filter-group">
+                    <h4>Color</h4>
+                    <div class="color-swatches">
+                        <button class="swatch" style="background:#FFD84D" aria-label="Yellow"></button>
+                        <button class="swatch active" style="background:#FF7043" aria-label="Coral"></button>
+                        <button class="swatch" style="background:#5BC3EB" aria-label="Sky"></button>
+                        <button class="swatch" style="background:#7FE6C4" aria-label="Mint"></button>
+                        <button class="swatch" style="background:#FF6B9D" aria-label="Pink"></button>
+                        <button class="swatch" style="background:#1A1A1A" aria-label="Ink"></button>
+                    </div>
+                </div>
+                <button class="btn btn-coral" style="width: 100%; justify-content: center;">Apply Filters</button>
+            </aside>
+
+            <div class="shop-main">
+                <div class="shop-toolbar">
+                    <span class="count">Showing <strong>12</strong> of <strong>340</strong> products</span>
+                    <select class="sort-select">
+                        <option>Sort: Featured</option>
+                        <option>Newest</option>
+                        <option>Price: Low to High</option>
+                        <option>Price: High to Low</option>
+                        <option>Most Loved</option>
+                    </select>
+                </div>
+
+                <div class="shop-grid">
+                    <a href="product.html" class="product">
+                        <div class="product-image">
+                            <span class="product-badge">Bestseller</span>
+                            <button class="wishlist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+                            <img src="https://images.unsplash.com/photo-1589924691995-400dc9ecc119?q=80&w=700&auto=format&fit=crop" alt="">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-meta">Treats · For Dogs</div>
+                            <h3>Wild Salmon Crunchies</h3>
+                            <div class="product-rating"><span class="stars">★★★★★</span><span>4.9</span></div>
+                            <div class="product-footer"><span class="price">$18</span><button class="quick-add"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button></div>
+                        </div>
+                    </a>
+                    <a href="product.html" class="product">
+                        <div class="product-image">
+                            <span class="product-badge new">New</span>
+                            <button class="wishlist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+                            <img src="https://images.unsplash.com/photo-1541599540903-216a46ca1dc0?q=80&w=700&auto=format&fit=crop" alt="">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-meta">Beds · For All</div>
+                            <h3>Cloud 9 Cozy Bed</h3>
+                            <div class="product-rating"><span class="stars">★★★★★</span><span>5.0</span></div>
+                            <div class="product-footer"><span class="price">$89</span><button class="quick-add"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button></div>
+                        </div>
+                    </a>
+                    <a href="product.html" class="product">
+                        <div class="product-image">
+                            <span class="product-badge sale">-30%</span>
+                            <button class="wishlist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+                            <img src="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?q=80&w=700&auto=format&fit=crop" alt="">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-meta">Toys · For Dogs</div>
+                            <h3>Mega Tug Rope Party</h3>
+                            <div class="product-rating"><span class="stars">★★★★☆</span><span>4.7</span></div>
+                            <div class="product-footer"><span class="price"><del>$20</del>$14</span><button class="quick-add"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button></div>
+                        </div>
+                    </a>
+                    <a href="product.html" class="product">
+                        <div class="product-image">
+                            <span class="product-badge">Vet Pick</span>
+                            <button class="wishlist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+                            <img src="https://images.unsplash.com/photo-1568640347023-a616a30bc3bd?q=80&w=700&auto=format&fit=crop" alt="">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-meta">Food · For Dogs</div>
+                            <h3>Chef's Kiss Chicken Bowl</h3>
+                            <div class="product-rating"><span class="stars">★★★★★</span><span>4.8</span></div>
+                            <div class="product-footer"><span class="price">$42</span><button class="quick-add"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button></div>
+                        </div>
+                    </a>
+                    <a href="product.html" class="product">
+                        <div class="product-image">
+                            <span class="product-badge new">New</span>
+                            <button class="wishlist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+                            <img src="https://images.unsplash.com/photo-1583511655826-05700442982b?q=80&w=700&auto=format&fit=crop" alt="">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-meta">Grooming · For All</div>
+                            <h3>Sudsy Oatmeal Shampoo</h3>
+                            <div class="product-rating"><span class="stars">★★★★★</span><span>4.9</span></div>
+                            <div class="product-footer"><span class="price">$26</span><button class="quick-add"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button></div>
+                        </div>
+                    </a>
+                    <a href="product.html" class="product">
+                        <div class="product-image">
+                            <button class="wishlist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+                            <img src="https://images.unsplash.com/photo-1545249390-6bdfa286032f?q=80&w=700&auto=format&fit=crop" alt="">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-meta">Toys · For Cats</div>
+                            <h3>Wobbly Wool Mouse Trio</h3>
+                            <div class="product-rating"><span class="stars">★★★★☆</span><span>4.6</span></div>
+                            <div class="product-footer"><span class="price">$22</span><button class="quick-add"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button></div>
+                        </div>
+                    </a>
+                    <a href="product.html" class="product">
+                        <div class="product-image">
+                            <span class="product-badge sale">-20%</span>
+                            <button class="wishlist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+                            <img src="https://images.unsplash.com/photo-1586671267731-da2cf3ceeb80?q=80&w=700&auto=format&fit=crop" alt="">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-meta">Travel · For All</div>
+                            <h3>Roadtrip Weekend Carrier</h3>
+                            <div class="product-rating"><span class="stars">★★★★★</span><span>4.9</span></div>
+                            <div class="product-footer"><span class="price"><del>$158</del>$126</span><button class="quick-add"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button></div>
+                        </div>
+                    </a>
+                    <a href="product.html" class="product">
+                        <div class="product-image">
+                            <button class="wishlist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+                            <img src="https://images.unsplash.com/photo-1615486511484-92e172cc4fe0?q=80&w=700&auto=format&fit=crop" alt="">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-meta">Treats · For Dogs</div>
+                            <h3>Good Boy Training Bites</h3>
+                            <div class="product-rating"><span class="stars">★★★★★</span><span>4.8</span></div>
+                            <div class="product-footer"><span class="price">$12</span><button class="quick-add"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button></div>
+                        </div>
+                    </a>
+                    <a href="product.html" class="product">
+                        <div class="product-image">
+                            <span class="product-badge">Limited</span>
+                            <button class="wishlist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+                            <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?q=80&w=700&auto=format&fit=crop" alt="">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-meta">Accessories</div>
+                            <h3>Rainbow Rope Collar</h3>
+                            <div class="product-rating"><span class="stars">★★★★★</span><span>4.9</span></div>
+                            <div class="product-footer"><span class="price">$32</span><button class="quick-add"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button></div>
+                        </div>
+                    </a>
+                    <a href="product.html" class="product">
+                        <div class="product-image">
+                            <button class="wishlist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+                            <img src="https://images.unsplash.com/photo-1591856419156-e9b8a7c1ad8f?q=80&w=700&auto=format&fit=crop" alt="">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-meta">Food · For Cats</div>
+                            <h3>Purrfect Tuna Pâté</h3>
+                            <div class="product-rating"><span class="stars">★★★★☆</span><span>4.7</span></div>
+                            <div class="product-footer"><span class="price">$24</span><button class="quick-add"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button></div>
+                        </div>
+                    </a>
+                    <a href="product.html" class="product">
+                        <div class="product-image">
+                            <span class="product-badge new">New</span>
+                            <button class="wishlist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+                            <img src="https://images.unsplash.com/photo-1425082661705-1834bfd09dca?q=80&w=700&auto=format&fit=crop" alt="">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-meta">Beds · For Dogs</div>
+                            <h3>Donut Snuggle Dome</h3>
+                            <div class="product-rating"><span class="stars">★★★★★</span><span>5.0</span></div>
+                            <div class="product-footer"><span class="price">$72</span><button class="quick-add"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button></div>
+                        </div>
+                    </a>
+                    <a href="product.html" class="product">
+                        <div class="product-image">
+                            <button class="wishlist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+                            <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?q=80&w=700&auto=format&fit=crop" alt="">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-meta">Grooming</div>
+                            <h3>Boop-the-Snoot Balm</h3>
+                            <div class="product-rating"><span class="stars">★★★★★</span><span>4.8</span></div>
+                            <div class="product-footer"><span class="price">$14</span><button class="quick-add"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button></div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="pagination">
+                    <button class="page-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn">2</button>
+                    <button class="page-btn">3</button>
+                    <button class="page-btn">4</button>
+                    <button class="page-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── Newsletter ── -->
+<section class="newsletter">
+    <div class="wrap">
+        <span class="eyebrow"><span>💌</span> join the pack</span>
+        <h2>Get 20% off your first order</h2>
+        <p>Plus sneak peeks, new drops, and tail-wagging tips. No spam, just good boys.</p>
+        <form class="newsletter-form">
+            <input type="email" placeholder="your@email.com" required>
+            <button type="submit">Sign me up!</button>
+        </form>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="wrap">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="index.html" class="logo">
+                    <span class="logo-badge"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="9" r="2.2"/><circle cx="19" cy="9" r="2.2"/><circle cx="9" cy="5" r="2"/><circle cx="15" cy="5" r="2"/><path d="M12 11c-3.5 0-6 2.8-6 5.5 0 2 1.5 3.5 3.5 3.5 1 0 1.8-.4 2.5-.9.7.5 1.5.9 2.5.9 2 0 3.5-1.5 3.5-3.5 0-2.7-2.5-5.5-6-5.5z"/></svg></span>
+                    paws & co.
+                </a>
+                <p>Tail-wagging goodies for the world's goodest boys and most exquisite cats. Small batch, big love.</p>
+                <div class="socials">
+                    <a href="#" class="social-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+                    <a href="#" class="social-link"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 8.5a6.5 6.5 0 0 1-4-1.5v7.5a5.5 5.5 0 1 1-5.5-5.5v3a2.5 2.5 0 1 0 2.5 2.5V2h3a4 4 0 0 0 4 4v2.5z"/></svg></a>
+                    <a href="#" class="social-link"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H8v-3h2.4V9.4c0-2.4 1.4-3.7 3.6-3.7 1 0 2.1.2 2.1.2v2.3h-1.2c-1.2 0-1.5.7-1.5 1.5V12h2.6l-.4 3h-2.2v7A10 10 0 0 0 22 12z"/></svg></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Shop</h4>
+                <ul><li><a href="shop.html">Food & Treats</a></li><li><a href="shop.html">Toys</a></li><li><a href="shop.html">Beds</a></li><li><a href="shop.html">Grooming</a></li></ul>
+            </div>
+            <div class="footer-col">
+                <h4>Help</h4>
+                <ul><li><a href="contact.html">Contact</a></li><li><a href="#">Shipping</a></li><li><a href="#">Returns</a></li><li><a href="#">FAQ</a></li></ul>
+            </div>
+            <div class="footer-col">
+                <h4>Company</h4>
+                <ul><li><a href="about.html">About</a></li><li><a href="#">Careers</a></li><li><a href="#">Press</a></li></ul>
+            </div>
+            <div class="footer-col">
+                <h4>Pack Perks</h4>
+                <ul><li><a href="#">Rewards</a></li><li><a href="#">Gift Cards</a></li><li><a href="#">Refer a Friend</a></li></ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 Paws & Co. Made with 🐾 in Portland.</span>
+            <div style="display: flex; gap: 1.5rem;"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Accessibility</a></div>
+        </div>
+    </div>
+</footer>
+
+<div class="cart-overlay" id="cartOverlay"></div>
+<aside class="cart-drawer" id="cartDrawer">
+    <div class="cart-head">
+        <h3>Your Cart (2)</h3>
+        <button class="icon-btn" id="cartClose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    </div>
+    <div class="cart-body">
+        <div class="shipping-bar">Add $18 more for free shipping! 🎉<div class="progress-bar"><div class="progress-fill"></div></div></div>
+        <div class="cart-item">
+            <img src="https://images.unsplash.com/photo-1589924691995-400dc9ecc119?q=80&w=200&auto=format&fit=crop" alt="">
+            <div class="cart-item-info"><h4>Wild Salmon Crunchies</h4><span class="cart-item-meta">Large · 12oz</span><div class="qty-control"><button>−</button><span>2</span><button>+</button></div></div>
+            <div class="cart-item-right"><span class="price">$36</span><button class="remove-btn">remove</button></div>
+        </div>
+        <div class="cart-item">
+            <img src="https://images.unsplash.com/photo-1541599540903-216a46ca1dc0?q=80&w=200&auto=format&fit=crop" alt="">
+            <div class="cart-item-info"><h4>Cloud 9 Cozy Bed</h4><span class="cart-item-meta">Medium · Mint</span><div class="qty-control"><button>−</button><span>1</span><button>+</button></div></div>
+            <div class="cart-item-right"><span class="price">$89</span><button class="remove-btn">remove</button></div>
+        </div>
+    </div>
+    <div class="cart-foot">
+        <div class="cart-total"><span>Subtotal</span><span class="total-price">$125</span></div>
+        <button class="btn btn-coral btn-lg checkout-btn">Checkout<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></button>
+    </div>
+</aside>
+
+<script src="script.js"></script>
+</body>
+</html>

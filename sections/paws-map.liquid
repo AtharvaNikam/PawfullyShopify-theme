@@ -1,0 +1,35 @@
+{% comment %} Paws & Co. Map Section — embed map iframe {% endcomment %}
+<section class="paws-map-section">
+  <div class="paws-wrap">
+    <div class="paws-section-head paws-reveal-up">
+      <div>
+        {% if section.settings.eyebrow != blank %}
+          <span class="paws-eyebrow"><span>{{ section.settings.eyebrow_icon }}</span> {{ section.settings.eyebrow }}</span>
+        {% endif %}
+        <h2>{{ section.settings.heading }}</h2>
+      </div>
+    </div>
+    <div class="paws-map-frame">
+      {% if section.settings.map_embed_url != blank %}
+        <iframe src="{{ section.settings.map_embed_url }}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Store location map"></iframe>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Paws Map",
+  "tag": "section",
+  "class": "paws-section-map",
+  "settings": [
+    { "type": "text", "id": "eyebrow_icon", "label": "Eyebrow emoji", "default": "📍" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow label", "default": "come hang out" },
+    { "type": "richtext", "id": "heading", "label": "Heading", "default": "<p>Visit the flagship</p>" },
+    { "type": "url", "id": "map_embed_url", "label": "Map embed URL", "info": "Use an OpenStreetMap or Google Maps iframe src URL" }
+  ],
+  "presets": [
+    { "name": "Paws Map", "settings": { "map_embed_url": "https://www.openstreetmap.org/export/embed.html?bbox=-122.7056,45.5253,-122.6911,45.5362&layer=mapnik&marker=45.5308,-122.6983" } }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,66 @@
+{
+  "sections": {
+    "page_header": {
+      "type": "paws-page-header",
+      "settings": {
+        "show_breadcrumb": true,
+        "current_label": "About",
+        "heading": "<p>Built by pet people,<br>for pet people.</p>",
+        "subtext": "We started with one question: why is most of this stuff… boring? Now we answer it daily with tail-waggingly good goodies."
+      }
+    },
+    "intro": {
+      "type": "paws-about-intro",
+      "settings": {
+        "eyebrow_icon": "🌱",
+        "eyebrow": "our story",
+        "heading": "<p>It started with a<br>stubborn beagle.</p>",
+        "body": "<p>In 2014, our founder's beagle Biscuit refused every treat on the shelf. Faced with a very judgemental 14kg critic, she got to work in her kitchen. One salmon-forward recipe and 10,000 zoomies later, Paws & Co. was born.</p><p>A decade on, we're a small team obsessed with making pet products that don't suck — stuff you'd actually be proud to have on your counter, that your pet is even more excited to see.</p><p>Everything we sell is vet-approved, cruelty-free, and small-batch. Because your weird little gremlin deserves more than landfill-grade squeakers.</p>",
+        "sticker_text": "Woof yeah!"
+      }
+    },
+    "values": {
+      "type": "paws-values",
+      "blocks": {
+        "v1": { "type": "value", "settings": { "emoji": "🌿", "title": "Real ingredients", "body": "If we wouldn't feed it to our own pets, it's not going on our shelf. Real food, identifiable first. No mystery meats, no filler fluff." } },
+        "v2": { "type": "value", "settings": { "emoji": "💛", "title": "Tail-tested", "body": "Every single product goes through our in-house panel of 47 dogs, 23 cats, and 3 very opinionated rabbits before it hits the shop." } },
+        "v3": { "type": "value", "settings": { "emoji": "🌍", "title": "Better for the planet", "body": "Compostable packaging, carbon-neutral shipping, and 1% of every sale goes to local shelters. Small steps, big tails." } }
+      },
+      "block_order": ["v1", "v2", "v3"]
+    },
+    "team": {
+      "type": "paws-team",
+      "blocks": {
+        "m1": { "type": "member", "settings": { "name": "Jessie Park", "role": "Founder · Chief Zoomies Officer" } },
+        "m2": { "type": "member", "settings": { "name": "Marco Rivera", "role": "Head of Nibble R&D" } },
+        "m3": { "type": "member", "settings": { "name": "Dr. Priya Kapoor", "role": "In-house Vet" } },
+        "m4": { "type": "member", "settings": { "name": "Sam Chen", "role": "Pack Experience Lead" } }
+      },
+      "block_order": ["m1", "m2", "m3", "m4"]
+    },
+    "timeline": {
+      "type": "paws-timeline",
+      "blocks": {
+        "t1": { "type": "milestone", "settings": { "marker": "'14", "title": "Biscuit says yes", "body": "First batch of Salmon Crunchies. Founder's kitchen." } },
+        "t2": { "type": "milestone", "settings": { "marker": "'18", "title": "First shop opens", "body": "Tiny brick-and-mortar in Portland. Still standing." } },
+        "t3": { "type": "milestone", "settings": { "marker": "'22", "title": "Online pack grows", "body": "50k+ subscribers, vet partnership, new HQ." } },
+        "t4": { "type": "milestone", "settings": { "marker": "'26", "title": "340 products & counting", "body": "Here, now, shipping tail-wags everywhere." } }
+      },
+      "block_order": ["t1", "t2", "t3", "t4"]
+    },
+    "stats": {
+      "type": "paws-stats",
+      "blocks": {
+        "s1": { "type": "stat", "settings": { "number": "86000", "suffix": "+", "label": "Happy Tails" } },
+        "s2": { "type": "stat", "settings": { "number": "340", "suffix": "+", "label": "Products" } },
+        "s3": { "type": "stat", "settings": { "number": "98", "suffix": "%", "label": "Reorder Rate" } },
+        "s4": { "type": "stat", "settings": { "number": "12", "suffix": "", "label": "Years" } }
+      },
+      "block_order": ["s1", "s2", "s3", "s4"]
+    },
+    "newsletter": {
+      "type": "paws-newsletter"
+    }
+  },
+  "order": ["page_header", "intro", "values", "team", "timeline", "stats", "newsletter"]
+}
