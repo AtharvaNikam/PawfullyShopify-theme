@@ -125,9 +125,14 @@
       {{ content_for_layout }}
     </main>
 
-    <footer>
-      {% sections 'footer-group' %}
-    </footer>
+    {% comment %}
+      Paws & Co. footer — rendered directly from Git, not from footer-group.json.
+      Shopify's GitHub integration treats sections/footer-group.json as merchant-owned
+      and never overwrites it from pushes. Rendering paws-footer directly via {% section %}
+      keeps the footer Git-controlled while each section remains customizable in the
+      theme editor (its settings and blocks).
+    {% endcomment %}
+    {% section 'paws-footer' %}
 
     {% render 'search-modal' %}
 

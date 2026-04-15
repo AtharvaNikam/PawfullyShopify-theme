@@ -258,11 +258,19 @@ function initTestimonialsCarousel() {
   });
 }
 
-// ─── 6. CART DRAWER ──────────────────────────────────────────────────────────
+// ─── 6. CART DRAWER — open/close + AJAX qty/remove ───────────────────────────
 function initCartDrawer() {
   const drawer = document.querySelector('.paws-cart-drawer');
   const overlay = document.querySelector('.paws-cart-overlay');
   if (!drawer || !overlay) return;
+
+  const moneyFormat = (window.Shopify && window.Shopify.money_format) || '${{amount}}';
+
+  function formatMoney(cents) {
+    // Simple money formatter (matches Shopify's default $X.XX)
+    const value = (cents / 100).toFixed(2);
+    return moneyFormat.replace(/\{\{\s*amount\s*\}\}/, value).replace(/\{\{[^}]+\}\}/g, value);
+  }
 
   function openCart() {
     drawer.classList.add('open');
@@ -278,23 +286,117 @@ function initCartDrawer() {
     drawer.setAttribute('aria-hidden', 'true');
   }
 
-  // Triggers
+  async function refreshCart() {
+    // Fetch the whole paws-cart-drawer via section rendering API; fallback to page reload.
+    try {
+      const res = await fetch('/?section_id=header', { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+      if (res.ok) {
+        const html = await res.text();
+        const tmp = document.createElement('div');
+        tmp.innerHTML = html;
+        const newDrawer = tmp.querySelector('.paws-cart-drawer');
+        const newCountBadges = tmp.querySelectorAll('[data-cart-count]');
+        if (newDrawer) {
+          drawer.innerHTML = newDrawer.innerHTML;
+          rewireCart();
+        }
+        // Update all count badges
+        const current = await fetch('/cart.js').then((r) => r.json());
+        document.querySelectorAll('[data-cart-count]').forEach((el) => {
+          el.textContent = current.item_count;
+          el.style.display = current.item_count > 0 ? '' : 'none';
+        });
+        return;
+      }
+    } catch (_) {
+      /* fall through to reload */
+    }
+    window.location.reload();
+  }
+
+  async function changeQuantity(line, qty) {
+    try {
+      const res = await fetch('/cart/change.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ line, quantity: qty }),
+      });
+      if (!res.ok) throw new Error('bad');
+      await refreshCart();
+    } catch (_) {
+      window.location.reload();
+    }
+  }
+
+  function rewireCart() {
+    drawer.querySelectorAll('[data-paws-cart-close]').forEach((b) => {
+      b.addEventListener('click', closeCart);
+    });
+    drawer.querySelectorAll('[data-paws-qty]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const line = parseInt(btn.dataset.line, 10);
+        const row = btn.closest('.paws-cart-item');
+        const display = row?.querySelector('[data-paws-qty-value]');
+        const current = parseInt(display?.textContent || '1', 10);
+        const direction = btn.dataset.pawsQty === 'plus' ? 1 : -1;
+        const next = Math.max(0, current + direction);
+        btn.disabled = true;
+        changeQuantity(line, next);
+      });
+    });
+    drawer.querySelectorAll('[data-paws-cart-remove]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const line = parseInt(btn.dataset.line, 10);
+        btn.disabled = true;
+        changeQuantity(line, 0);
+      });
+    });
+  }
+
+  // Header triggers
   document.querySelectorAll('[data-paws-cart-open]').forEach((btn) => {
     btn.addEventListener('click', openCart);
   });
-  document.querySelectorAll('[data-paws-cart-close], .paws-cart-close').forEach((btn) => {
+  document.querySelectorAll('[data-paws-cart-close]').forEach((btn) => {
     btn.addEventListener('click', closeCart);
   });
   overlay.addEventListener('click', closeCart);
-
-  // Escape key
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && drawer.classList.contains('open')) closeCart();
   });
 
-  // Expose globally for other functions
+  rewireCart();
+
+  // Expose for other scripts (PDP add-to-cart opens the drawer after success)
   window.pawsOpenCart = openCart;
   window.pawsCloseCart = closeCart;
+  window.pawsRefreshCart = refreshCart;
+
+  // When any form submits to /cart/add, intercept and refresh drawer instead of reloading
+  document.addEventListener('submit', async (e) => {
+    const form = e.target;
+    if (!(form instanceof HTMLFormElement)) return;
+    const action = form.getAttribute('action') || '';
+    const isAddToCart = action.includes('/cart/add') || form.matches('[action*="/cart/add"]');
+    if (!isAddToCart) return;
+
+    e.preventDefault();
+    const btn = form.querySelector('[data-paws-add-to-cart], button[type="submit"]');
+    const originalBtnText = btn ? btn.textContent : '';
+    if (btn) { btn.disabled = true; }
+
+    try {
+      const formData = new FormData(form);
+      const res = await fetch('/cart/add.js', { method: 'POST', body: formData });
+      if (!res.ok) throw new Error('add failed');
+      await refreshCart();
+      openCart();
+    } catch (_) {
+      form.submit();
+    } finally {
+      if (btn) { btn.disabled = false; btn.textContent = originalBtnText; }
+    }
+  });
 }
 
 // ─── 7. QUICK-ADD FEEDBACK ───────────────────────────────────────────────────
