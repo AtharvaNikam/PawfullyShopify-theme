@@ -11,6 +11,21 @@
 {%- assign main_collection = section.settings.collection -%}
 {%- assign max_products = section.settings.product_count | default: 8 -%}
 
+{%- comment -%} Count configured collection tabs so we know if there's anything to show. {%- endcomment -%}
+{%- assign configured_tabs = 0 -%}
+{%- for block in section.blocks -%}
+  {%- if block.type == 'filter' and block.settings.collection != blank -%}
+    {%- assign configured_tabs = configured_tabs | plus: 1 -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- assign has_content = false -%}
+{%- if main_collection != blank or configured_tabs > 0 -%}
+  {%- assign has_content = true -%}
+{%- endif -%}
+
+{%- if has_content == false and request.design_mode == false -%}
+  {%- comment -%} On storefront with nothing configured, render nothing. {%- endcomment -%}
+{%- else -%}
 <section class="paws-bestsellers" id="section-{{ section.id }}">
   <div class="paws-wrap">
     <div class="paws-section-head">
@@ -78,8 +93,16 @@
            is_active: true %}
       {% endif %}
     </div>
+
+    {%- if has_content == false and request.design_mode -%}
+      <div class="paws-panel-empty" style="padding: 2.5rem 1rem; text-align: center;">
+        <span style="font-size: 2.5rem; display: block; margin-bottom: 0.75rem;">🐾</span>
+        <p style="font-family: var(--paws-font-head); font-weight: 700;">Pick a default collection (or add collection tabs) in the theme editor to populate this section.</p>
+      </div>
+    {%- endif -%}
   </div>
 </section>
+{%- endif -%}
 
 {% schema %}
 {

@@ -298,7 +298,6 @@ function initCartDrawer() {
         const newCountBadges = tmp.querySelectorAll('[data-cart-count]');
         if (newDrawer) {
           drawer.innerHTML = newDrawer.innerHTML;
-          rewireCart();
         }
         // Update all count badges
         const current = await fetch('/cart.js').then((r) => r.json());
@@ -328,44 +327,42 @@ function initCartDrawer() {
     }
   }
 
-  function rewireCart() {
-    drawer.querySelectorAll('[data-paws-cart-close]').forEach((b) => {
-      b.addEventListener('click', closeCart);
-    });
-    drawer.querySelectorAll('[data-paws-qty]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const line = parseInt(btn.dataset.line, 10);
-        const row = btn.closest('.paws-cart-item');
-        const display = row?.querySelector('[data-paws-qty-value]');
-        const current = parseInt(display?.textContent || '1', 10);
-        const direction = btn.dataset.pawsQty === 'plus' ? 1 : -1;
-        const next = Math.max(0, current + direction);
-        btn.disabled = true;
-        changeQuantity(line, next);
-      });
-    });
-    drawer.querySelectorAll('[data-paws-cart-remove]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const line = parseInt(btn.dataset.line, 10);
-        btn.disabled = true;
-        changeQuantity(line, 0);
-      });
-    });
-  }
+  // Event delegation — single listener on the drawer; survives innerHTML replacement.
+  drawer.addEventListener('click', (e) => {
+    const closeBtn = e.target.closest('[data-paws-cart-close]');
+    if (closeBtn) { closeCart(); return; }
 
-  // Header triggers
-  document.querySelectorAll('[data-paws-cart-open]').forEach((btn) => {
-    btn.addEventListener('click', openCart);
+    const qtyBtn = e.target.closest('[data-paws-qty]');
+    if (qtyBtn && !qtyBtn.disabled) {
+      const line = parseInt(qtyBtn.dataset.line, 10);
+      const row = qtyBtn.closest('.paws-cart-item');
+      const display = row?.querySelector('[data-paws-qty-value]');
+      const current = parseInt(display?.textContent || '1', 10);
+      const direction = qtyBtn.dataset.pawsQty === 'plus' ? 1 : -1;
+      const next = Math.max(0, current + direction);
+      qtyBtn.disabled = true;
+      changeQuantity(line, next);
+      return;
+    }
+
+    const removeBtn = e.target.closest('[data-paws-cart-remove]');
+    if (removeBtn && !removeBtn.disabled) {
+      const line = parseInt(removeBtn.dataset.line, 10);
+      removeBtn.disabled = true;
+      changeQuantity(line, 0);
+    }
   });
-  document.querySelectorAll('[data-paws-cart-close]').forEach((btn) => {
-    btn.addEventListener('click', closeCart);
+
+  // Header triggers — delegated so they survive header AJAX refreshes too.
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('[data-paws-cart-open]')) { openCart(); return; }
+    const extClose = e.target.closest('[data-paws-cart-close]');
+    if (extClose && !drawer.contains(extClose)) closeCart();
   });
   overlay.addEventListener('click', closeCart);
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && drawer.classList.contains('open')) closeCart();
   });
-
-  rewireCart();
 
   // Expose for other scripts (PDP add-to-cart opens the drawer after success)
   window.pawsOpenCart = openCart;
@@ -746,6 +743,34 @@ function initMarqueeSpeed() {
   });
 }
 
+// ─── SEARCH MODAL TRIGGER ─────────────────────────────────────────────────────
+function initSearchModal() {
+  document.addEventListener('click', (e) => {
+    const trigger = e.target.closest('[data-paws-search-open]');
+    if (!trigger) return;
+    e.preventDefault();
+    const modal = document.querySelector('#search-modal');
+    if (!modal) {
+      window.location.href = '/search';
+      return;
+    }
+    // Horizon's <dialog-component> wraps a native <dialog>. Prefer its public API;
+    // fall back to the native dialog if the custom element hasn't upgraded yet.
+    if (typeof modal.showDialog === 'function') {
+      modal.showDialog();
+    } else {
+      const nativeDialog = modal.querySelector('dialog');
+      if (nativeDialog?.showModal) nativeDialog.showModal();
+      else window.location.href = '/search';
+    }
+    // Focus the search input for immediate typing.
+    requestAnimationFrame(() => {
+      const input = modal.querySelector('input[type="search"]');
+      input?.focus();
+    });
+  });
+}
+
 // ─── INIT ALL ─────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   initScrollReveal();
@@ -754,6 +779,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initCounters();
   initTestimonialsCarousel();
   initCartDrawer();
+  initSearchModal();
   initQuickAdd();
   initPdpGallery();
   initPdpOptions();

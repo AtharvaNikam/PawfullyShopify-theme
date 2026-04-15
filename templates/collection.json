@@ -14,7 +14,7 @@
       "settings": {
         "dynamic_source": "collection",
         "show_breadcrumb": true,
-        "heading": "<p>The Goodie Collection</p>",
+        "heading": "",
         "subtext": ""
       }
     },

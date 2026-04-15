@@ -1,4 +1,13 @@
 {% comment %} Paws & Co. Hero Slider — 3 editable slides {% endcomment %}
+{%- if section.blocks.size == 0 -%}
+  {%- if request.design_mode -%}
+    <section class="paws-hero-section paws-hero-empty">
+      <div class="paws-wrap" style="padding-block: 4rem; text-align: center;">
+        <p style="font-family: var(--paws-font-head); font-weight: 700;">Add a slide block in the theme editor to show the hero.</p>
+      </div>
+    </section>
+  {%- endif -%}
+{%- else -%}
 <section class="paws-hero-section">
   <div class="paws-slider">
     {% for block in section.blocks %}
@@ -75,6 +84,7 @@
     </div>
   {% endif %}
 </section>
+{%- endif -%}
 
 {% schema %}
 {
