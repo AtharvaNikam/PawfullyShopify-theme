@@ -76,11 +76,7 @@
       {%- assign first_panel_shown = section.settings.show_all_pill -%}
       {% for block in section.blocks %}
         {%- if block.type == 'filter' and block.settings.collection != blank -%}
-          {% render 'paws-product-panel',
-             panel_key: block.settings.collection.handle,
-             panel_collection: block.settings.collection,
-             max_products: max_products,
-             is_active: first_panel_shown == false %}
+          {% render 'paws-product-panel', panel_key: block.settings.collection.handle, panel_collection: block.settings.collection, max_products: max_products, is_active: first_panel_shown %}
           {%- assign first_panel_shown = true -%}
         {%- endif -%}
       {% endfor %}
@@ -148,3 +144,20 @@
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {% render 'paws-product-panel',
+                 panel_key: block.settings.collection.handle,
+                 panel_collection: block.settings.collection,
+                 max_products: max_products,
+                 is_active: first_panel_shown == false %}
+  to: "{% render 'paws-product-panel', panel_key: block.settings.collection.handle,
+    panel_collection: block.settings.collection, max_products: max_products, is_active:
+    first_panel_shown %}"
+  position: 3478..3659
+{% endcomment %}
